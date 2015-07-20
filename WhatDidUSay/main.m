@@ -2,8 +2,8 @@
 //  main.m
 //  WhatDidUSay
 //
-//  Created by Marshall Epie on 11/04/2015.
-//  Copyright (c) 2015 Marshall Epie. All rights reserved.
+//  Created by iOS on 18/07/15.
+//  Copyright (c) 2015 xxx. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
