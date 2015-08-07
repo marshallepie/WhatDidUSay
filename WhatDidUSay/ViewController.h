@@ -8,15 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <MessageUI/MFMailComposeViewController.h>
+#import <MessageUI/MessageUI.h>
+#import "CustomTableViewCell.h"
 
-@interface ViewController : UIViewController<AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ViewController : UIViewController<AVAudioRecorderDelegate, AVAudioPlayerDelegate,UIGestureRecognizerDelegate, UIActionSheetDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,ButtonDelegate>
+
 {
     IBOutlet UIButton *whatSayBtn;
     IBOutlet UIButton *startBtn;
     IBOutlet UIButton *stopBtn;
     IBOutlet UIActivityIndicatorView *actView;
     IBOutlet UILabel *stateLbl;
-    
+    UILongPressGestureRecognizer *longGesture;
+
     IBOutlet UILabel *recordLbl;
     
     NSString *recorderFilePath, *dateString;

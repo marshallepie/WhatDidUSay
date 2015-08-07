@@ -21,7 +21,13 @@
     NSTimer        *playTimer;
     int             count;
     NSIndexPath    *selectedIndex;
+    NSString *audioFile;
+    IBOutlet UIButton *deleteButton;
+    NSMutableDictionary *boolArray;
+
 }
+-(IBAction)deleteAction:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UITableView *recordTableView;
 
 @end
@@ -40,7 +46,7 @@
     recordTableView.hidden = FALSE;
     recordTableView.allowsMultipleSelectionDuringEditing = NO;
     
-    
+    boolArray=[[NSMutableDictionary alloc]init];
     stopBtn.enabled = FALSE;
     whatSayBtn.enabled = FALSE;
     
@@ -57,6 +63,95 @@
     UINib *countryNib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
     [self.recordTableView registerNib:countryNib
          forCellReuseIdentifier:@"customCell"];
+    
+    //Long Gesture
+    longGesture = [[UILongPressGestureRecognizer alloc]
+                   initWithTarget:self action:@selector(handleLongPress:)];
+    longGesture.minimumPressDuration = 1.0; //seconds
+    longGesture.delegate = self;
+    [recordTableView addGestureRecognizer:longGesture];
+}
+
+#pragma mark- Long gesture
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    CGPoint p = [gestureRecognizer locationInView:recordTableView];
+    NSIndexPath *indexPath = [recordTableView indexPathForRowAtPoint:p];
+    if (indexPath == nil)
+        NSLog(@"long press on table view but not on a row");
+    else
+    {
+        if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
+        {
+            // getImageforPost=  [[arrTableCount objectAtIndex:indexPath.row]valueForKey:@"Image"];
+            
+            audioFile=[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, [arrFiles objectAtIndex:indexPath.row]];
+            
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Export your Recording." delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mail",@"Text",@"DropBox", nil];
+            actionSheet.tag=1;
+            [actionSheet showInView:self.view];
+        }
+    }
+    
+}
+
+#pragma mark -Action Sheet Delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.tag==1)
+    {
+        if (buttonIndex == 0)
+        {
+            NSURL *url = [[NSURL alloc]initFileURLWithPath:audioFile];
+            NSData *soundFile = [[NSData alloc] initWithContentsOfURL:url];
+            
+            MFMailComposeViewController *controller =
+            [[MFMailComposeViewController alloc]init];
+            controller.mailComposeDelegate = self;
+            [controller addAttachmentData:soundFile mimeType:@"audio/mpeg" fileName:@""];
+            [controller setSubject:@"Demo Audio File"];
+            [controller setMessageBody:@"Dummy Text" isHTML:NO];
+            [self presentViewController:controller animated: YES completion:nil];
+            
+        }
+        else if(buttonIndex == 1)
+        {
+            MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+            if([MFMessageComposeViewController canSendAttachments] &&
+               [MFMessageComposeViewController canSendText] &&
+               [MFMessageComposeViewController isSupportedAttachmentUTI:@"com.apple.coreaudio-​format"])
+            {
+                controller.body = @"Dummy Text";
+                NSURL *url = [[NSURL alloc]initFileURLWithPath:audioFile];
+                [controller addAttachmentURL:url withAlternateFilename:nil]; //.caf file
+                controller.recipients = [NSArray arrayWithObjects:@"1(234)567-8910", nil];
+                controller.messageComposeDelegate = self;
+                [self presentViewController:controller animated:YES completion:nil];
+            }
+        }
+        else if(buttonIndex==2)
+        {
+            
+        }
+    }
+}
+
+#pragma mark - Mail Delagate
+- (void)mailComposeController:(MFMailComposeViewController*)mailController didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
+    if (result==MFMailComposeResultSent){
+        NSLog(@"Mail Sent");
+    }
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark - Message Delegate
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)navigationController:(UINavigationController *)navigationController     willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -69,25 +164,27 @@
         if (arrFiles.count == 0) {
             recordTableView.hidden = YES;
             stateLbl.hidden = NO;
+            deleteButton.hidden = YES;
         }
         else{
             recordTableView.hidden = NO;
             stateLbl.hidden = YES;
-            
+            deleteButton.hidden=NO;
             for (int i = 0; i < arrFiles.count; i++) {
                 [playingStateArray addObject:@"No"];
+                NSString *str=[arrFiles objectAtIndex:i];
+                [boolArray setValue:[NSNumber numberWithBool:NO] forKey:str];
+
             }
         }
     }
     
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"DateArray"])
-    {
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"DateArray"]){
         dateArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"DateArray"]];
         NSLog(@"DateArray %@", dateArray);
     }
     
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"TimeArray"])
-    {
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"TimeArray"]){
         timeArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"TimeArray"]];
         NSLog(@"DateArray %@", timeArray);
     }
@@ -169,17 +266,53 @@
     
 }
 
+-(IBAction)deleteAction:(id)sender{
+    NSMutableArray *arr1=[[NSMutableArray alloc]init];
+
+    for(int i =0;i<[boolArray count];i++){
+        NSString *dic=[arrFiles objectAtIndex:i];
+        BOOL checked=[[boolArray objectForKey:dic]boolValue];
+        if(checked){
+           NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            [arr1 addObject:indexPath];
+        }
+    }
+    
+        NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
+        for (NSIndexPath *selectionIndex in arr1){
+            [indicesOfItemsToDelete addIndex:selectionIndex.row];
+        }
+        [arrFiles removeObjectsAtIndexes:indicesOfItemsToDelete];
+        [dateArray removeObjectsAtIndexes:indicesOfItemsToDelete];
+        [timeArray removeObjectsAtIndexes:indicesOfItemsToDelete];
+        
+    
+        [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:@"StoredFiles"];
+        [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:@"DateArray"];
+        [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:@"TimeArray"];
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [boolArray removeAllObjects];
+    for(int i=0; i<arrFiles.count; i++){
+        NSString *str=[arrFiles objectAtIndex:i];
+        [boolArray setValue:[NSNumber numberWithBool:NO] forKey:str];
+    }
+    [recordTableView reloadData];
+    
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (arrFiles.count == 0) {
         recordTableView.hidden = YES;
         stateLbl.hidden = NO;
+        deleteButton.hidden=YES;
     }
     else{
         recordTableView.hidden = NO;
         stateLbl.hidden = YES;
+        deleteButton.hidden= NO;
     }
-    
     return arrFiles.count;
 }
 
@@ -204,7 +337,25 @@
         cell.stateImg.image = [UIImage imageNamed:@"pauseBtn.png"];
     }
     
+    cell.delegate=self;
+    
+    NSString *value=[arrFiles objectAtIndex:indexPath.row];
+    BOOL checked=false;
+
+    checked = [[boolArray objectForKey:value] boolValue];
+    UIImage *image = (checked) ? [UIImage imageNamed:@"Pass_check.png"] : [UIImage imageNamed:@"Pass_Uncheck.png"];
+    [cell.selectedBtn setImage:image forState:UIControlStateNormal];
+    cell.tag=indexPath.row;
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    
     return cell;
+}
+
+-(void)useButton:(id)sender{
+    NSString *dic=[arrFiles objectAtIndex:[sender tag]];
+    BOOL  checked1 = [[boolArray objectForKey:dic] boolValue];
+    [boolArray setValue:[NSNumber numberWithBool:!checked1] forKey:dic];
+    [recordTableView reloadData];
 }
 
 - (IBAction)startBtnClicked:(id)sender {
@@ -226,7 +377,6 @@
 }
 
 - (IBAction)recBtnClicked:(id)sender {
-    
     actView.hidden = FALSE;
     [actView startAnimating];
     [recorder stop];
@@ -237,7 +387,6 @@
 - (void) fnStopRecordingAndSave
 {
     @try {
-        
         NSString *strURL = [NSString stringWithFormat:@"%@/%@.m4a", DOCUMENTS_FOLDER, dateString] ;
         NSURL *url = [NSURL URLWithString:strURL];
         
@@ -275,7 +424,6 @@
             [exportSession exportAsynchronouslyWithCompletionHandler:^{
                 [actView stopAnimating];
                 actView.hidden = TRUE;
-                
                 switch ([exportSession status]) {
                     case AVAssetExportSessionStatusFailed:
                         NSLog(@"Export Failed: %@", [exportSession error] );
@@ -295,6 +443,8 @@
                         {
                             if(arrFiles.count > 0)
                             {
+                                [boolArray removeAllObjects];
+
                                 for(int i = 0; i<arrFiles.count;i++)
                                 {
                                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", arrFiles];
@@ -310,6 +460,7 @@
                                         
                                         [dateArray addObject:date];
                                         [playingStateArray addObject:@"No"];
+                                        [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:i]];
                                         
                                         NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
                                         [timeArray addObject:timeline];
@@ -326,7 +477,7 @@
                                 
                                 [dateArray addObject:date];
                                 [playingStateArray addObject:@"No"];
-                                
+                                [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:0]];
                                 NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
                                 [timeArray addObject:timeline];
                             }
@@ -398,7 +549,8 @@
                         if(fileExists)
                         {
                             if(arrFiles.count > 0)
-                            {
+                            {    [boolArray removeAllObjects];
+
                                 for(int i = 0; i<arrFiles.count;i++)
                                 {
                                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", arrFiles];
@@ -414,6 +566,8 @@
                                         
                                         [dateArray addObject:date];
                                         [playingStateArray addObject:@"No"];
+                                        [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:i]];
+
                                         [timeArray addObject:@"10"];
                                     }
                                 }
@@ -428,6 +582,7 @@
                                 
                                 [dateArray addObject:date];
                                 [playingStateArray addObject:@"No"];
+                                [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:0]];
                                 [timeArray addObject:@"10"];
                             }
                         }
@@ -487,7 +642,11 @@
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    
+    [audioPlayer stop];
+    for (int i=0; i<playingStateArray.count; i++) {
+        [playingStateArray replaceObjectAtIndex:i withObject:@"No"];
+    }
+    [recordTableView reloadData];
 }
 
 // This is called when user click on Start Recording button or when called from Store Recording button's second process.

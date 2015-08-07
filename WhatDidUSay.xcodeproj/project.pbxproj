@@ -25,6 +25,8 @@
 		8121543E1B5B45F20009D359 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8121543D1B5B45F20009D359 /* UIKit.framework */; };
 		812154401B5B45FA0009D359 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8121543F1B5B45FA0009D359 /* Foundation.framework */; };
 		812154421B5B45FF0009D359 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812154411B5B45FF0009D359 /* AVFoundation.framework */; };
+		FDE744F21B7485D6004D229E /* Pass_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F11B7485D6004D229E /* Pass_check@2x.png */; };
+		FDE744F41B7485DB004D229E /* Pass_Uncheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		8121543D1B5B45F20009D359 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8121543F1B5B45FA0009D359 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		812154411B5B45FF0009D359 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FDE744F11B7485D6004D229E /* Pass_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pass_check@2x.png"; sourceTree = "<group>"; };
+		FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pass_Uncheck@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,8 @@
 		812153FF1B5A5EC30009D359 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FDE744F11B7485D6004D229E /* Pass_check@2x.png */,
+				FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */,
 				812154001B5A5EC30009D359 /* Info.plist */,
 				812154011B5A5EC30009D359 /* main.m */,
 			);
@@ -211,6 +217,8 @@
 				812154381B5B0D9F0009D359 /* recordingBtn.png in Resources */,
 				812154301B5A82970009D359 /* stopBtn.png in Resources */,
 				8121543A1B5B0D9F0009D359 /* recStopBtn.png in Resources */,
+				FDE744F41B7485DB004D229E /* Pass_Uncheck@2x.png in Resources */,
+				FDE744F21B7485D6004D229E /* Pass_check@2x.png in Resources */,
 				812154341B5B09790009D359 /* recBtn.png in Resources */,
 				812154291B5A81300009D359 /* CustomTableViewCell.xib in Resources */,
 				8121540D1B5A5EC30009D359 /* Images.xcassets in Resources */,
@@ -264,8 +272,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Commercial Protection LLC (EKZWEZKJ7V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Commercial Protection LLC (EKZWEZKJ7V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -287,7 +295,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "22d84780-3844-4e46-932f-c9102f0db368";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -309,8 +317,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Commercial Protection LLC (EKZWEZKJ7V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Commercial Protection LLC (EKZWEZKJ7V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -325,7 +333,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "22d84780-3844-4e46-932f-c9102f0db368";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -336,12 +344,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Commercial Protection LLC (EKZWEZKJ7V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = WhatDidUSay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "22d84780-3844-4e46-932f-c9102f0db368";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -350,12 +358,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Commercial Protection LLC (EKZWEZKJ7V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = WhatDidUSay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "22d84780-3844-4e46-932f-c9102f0db368";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -378,6 +386,7 @@
 				812154211B5A5EC30009D359 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

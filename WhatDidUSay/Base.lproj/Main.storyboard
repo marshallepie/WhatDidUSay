@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jmR-0O-82p">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jmR-0O-82p">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -78,16 +78,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Action" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pa8-I4-rgM">
-                                <rect key="frame" x="464" y="68" width="120" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="0hg-G2-usD"/>
-                                    <constraint firstAttribute="height" constant="21" id="FMo-z6-wlG"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="15"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yew-JV-wmQ">
                                 <rect key="frame" x="353" y="515" width="65" height="65"/>
                                 <constraints>
@@ -102,25 +92,54 @@
                                     <action selector="stopBtnClicked:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="tRW-yA-JAr"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Action" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pa8-I4-rgM">
+                                <rect key="frame" x="7" y="67" width="120" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Ahh-xT-mho"/>
+                                    <constraint firstAttribute="width" constant="120" id="BMV-YK-zdx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vHl-Pp-5hG">
+                                <rect key="frame" x="543" y="61" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="C9w-9k-qzy"/>
+                                    <constraint firstAttribute="height" constant="30" id="dIz-cw-tfk"/>
+                                </constraints>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="aUG-uq-5GD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Pxu-sr-mhy" secondAttribute="trailing" id="5Oi-5x-acq"/>
                             <constraint firstItem="wZ5-AN-b2a" firstAttribute="top" secondItem="Pxu-sr-mhy" secondAttribute="bottom" constant="15" id="7EH-Yp-1ZV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Pa8-I4-rgM" secondAttribute="trailing" constant="457" id="9eu-TV-qhd"/>
                             <constraint firstAttribute="centerY" secondItem="OUV-C1-MAC" secondAttribute="centerY" constant="2" id="FWk-kY-ENx"/>
                             <constraint firstItem="wZ5-AN-b2a" firstAttribute="leading" secondItem="Kg9-gW-DtA" secondAttribute="trailing" constant="20" id="Fr4-37-mhO"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="wZ5-AN-b2a" secondAttribute="bottom" constant="20" id="K8M-Mm-i82"/>
+                            <constraint firstItem="vHl-Pp-5hG" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="41" id="Qdg-Jc-qwV"/>
+                            <constraint firstItem="Pxu-sr-mhy" firstAttribute="top" secondItem="Pa8-I4-rgM" secondAttribute="bottom" constant="7" id="Rnp-C7-X1t"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Kg9-gW-DtA" secondAttribute="bottom" constant="20" id="Sd3-TD-I2x"/>
                             <constraint firstItem="Pxu-sr-mhy" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="UhC-U0-ECR"/>
-                            <constraint firstItem="Pa8-I4-rgM" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="48" id="VFS-8t-omG"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="yew-JV-wmQ" secondAttribute="bottom" constant="20" id="XaE-Kb-jaL"/>
                             <constraint firstAttribute="centerX" secondItem="LhE-hV-K7b" secondAttribute="centerX" id="ZuH-2W-oRx"/>
+                            <constraint firstItem="Pa8-I4-rgM" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="47" id="aBH-rn-l44"/>
                             <constraint firstItem="LhE-hV-K7b" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="15" id="dgN-Fv-vFW"/>
+                            <constraint firstItem="Pa8-I4-rgM" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-9" id="hIP-bi-VDc"/>
                             <constraint firstItem="Pxu-sr-mhy" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="75" id="hdy-06-Ufu"/>
                             <constraint firstItem="yew-JV-wmQ" firstAttribute="leading" secondItem="wZ5-AN-b2a" secondAttribute="trailing" constant="20" id="nxV-uD-pSJ"/>
                             <constraint firstAttribute="centerX" secondItem="wZ5-AN-b2a" secondAttribute="centerX" constant="-0.5" id="qTC-mW-aWl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Pa8-I4-rgM" secondAttribute="trailing" id="sR7-iU-l41"/>
                             <constraint firstAttribute="centerX" secondItem="OUV-C1-MAC" secondAttribute="centerX" id="uwj-t6-AhX"/>
+                            <constraint firstItem="Pxu-sr-mhy" firstAttribute="top" secondItem="vHl-Pp-5hG" secondAttribute="bottom" constant="4" id="xmu-pd-33F"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vHl-Pp-5hG" secondAttribute="trailing" constant="-5" id="yyD-4y-dsA"/>
                             <constraint firstItem="Pxu-sr-mhy" firstAttribute="top" secondItem="LhE-hV-K7b" secondAttribute="bottom" constant="25" id="z1K-Ka-MZZ"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Pxu-sr-mhy" secondAttribute="bottom" constant="100" id="zmZ-y0-H1F"/>
                         </constraints>
@@ -128,6 +147,7 @@
                     <navigationItem key="navigationItem" id="AWB-hH-v58"/>
                     <connections>
                         <outlet property="actView" destination="MCZ-7Q-o4r" id="IXE-U9-XpD"/>
+                        <outlet property="deleteButton" destination="vHl-Pp-5hG" id="eUO-OG-tsm"/>
                         <outlet property="recordLbl" destination="Pa8-I4-rgM" id="Aoa-DS-Az7"/>
                         <outlet property="recordTableView" destination="Pxu-sr-mhy" id="12q-fL-ecB"/>
                         <outlet property="startBtn" destination="Kg9-gW-DtA" id="W7k-18-8sb"/>
