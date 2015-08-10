@@ -25,8 +25,13 @@
 		8121543E1B5B45F20009D359 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8121543D1B5B45F20009D359 /* UIKit.framework */; };
 		812154401B5B45FA0009D359 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8121543F1B5B45FA0009D359 /* Foundation.framework */; };
 		812154421B5B45FF0009D359 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812154411B5B45FF0009D359 /* AVFoundation.framework */; };
+		FDC227B01B7875A40031A92B /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227AF1B7875A40031A92B /* DropboxSDK.framework */; };
+		FDC227B21B7875BF0031A92B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227B11B7875BE0031A92B /* Security.framework */; };
+		FDC227B41B7875C70031A92B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227B31B7875C70031A92B /* QuartzCore.framework */; };
 		FDE744F21B7485D6004D229E /* Pass_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F11B7485D6004D229E /* Pass_check@2x.png */; };
 		FDE744F41B7485DB004D229E /* Pass_Uncheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */; };
+		FDE744F71B74DFED004D229E /* unchecked-orange.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F51B74DFED004D229E /* unchecked-orange.png */; };
+		FDE744F81B74DFED004D229E /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F61B74DFED004D229E /* checked.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,8 +60,13 @@
 		8121543D1B5B45F20009D359 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8121543F1B5B45FA0009D359 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		812154411B5B45FF0009D359 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FDC227AF1B7875A40031A92B /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		FDC227B11B7875BE0031A92B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		FDC227B31B7875C70031A92B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FDE744F11B7485D6004D229E /* Pass_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pass_check@2x.png"; sourceTree = "<group>"; };
 		FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pass_Uncheck@2x.png"; sourceTree = "<group>"; };
+		FDE744F51B74DFED004D229E /* unchecked-orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked-orange.png"; sourceTree = "<group>"; };
+		FDE744F61B74DFED004D229E /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +74,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDC227B41B7875C70031A92B /* QuartzCore.framework in Frameworks */,
+				FDC227B21B7875BF0031A92B /* Security.framework in Frameworks */,
+				FDC227B01B7875A40031A92B /* DropboxSDK.framework in Frameworks */,
 				812154421B5B45FF0009D359 /* AVFoundation.framework in Frameworks */,
 				812154401B5B45FA0009D359 /* Foundation.framework in Frameworks */,
 				8121543E1B5B45F20009D359 /* UIKit.framework in Frameworks */,
@@ -76,6 +89,9 @@
 		812153F31B5A5EC30009D359 = {
 			isa = PBXGroup;
 			children = (
+				FDC227B31B7875C70031A92B /* QuartzCore.framework */,
+				FDC227B11B7875BE0031A92B /* Security.framework */,
+				FDC227AF1B7875A40031A92B /* DropboxSDK.framework */,
 				812154411B5B45FF0009D359 /* AVFoundation.framework */,
 				8121543F1B5B45FA0009D359 /* Foundation.framework */,
 				8121543D1B5B45F20009D359 /* UIKit.framework */,
@@ -114,6 +130,8 @@
 		812153FF1B5A5EC30009D359 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FDE744F51B74DFED004D229E /* unchecked-orange.png */,
+				FDE744F61B74DFED004D229E /* checked.png */,
 				FDE744F11B7485D6004D229E /* Pass_check@2x.png */,
 				FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */,
 				812154001B5A5EC30009D359 /* Info.plist */,
@@ -211,12 +229,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDE744F81B74DFED004D229E /* checked.png in Resources */,
 				812154391B5B0D9F0009D359 /* recStartBtn.png in Resources */,
 				8121543C1B5B11770009D359 /* pauseBtn.png in Resources */,
 				8121540B1B5A5EC30009D359 /* Main.storyboard in Resources */,
 				812154381B5B0D9F0009D359 /* recordingBtn.png in Resources */,
 				812154301B5A82970009D359 /* stopBtn.png in Resources */,
 				8121543A1B5B0D9F0009D359 /* recStopBtn.png in Resources */,
+				FDE744F71B74DFED004D229E /* unchecked-orange.png in Resources */,
 				FDE744F41B7485DB004D229E /* Pass_Uncheck@2x.png in Resources */,
 				FDE744F21B7485D6004D229E /* Pass_check@2x.png in Resources */,
 				812154341B5B09790009D359 /* recBtn.png in Resources */,
@@ -345,6 +365,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = WhatDidUSay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -359,6 +383,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = WhatDidUSay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

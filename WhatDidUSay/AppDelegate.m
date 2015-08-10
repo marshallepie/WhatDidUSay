@@ -7,17 +7,47 @@
 //
 
 #import "AppDelegate.h"
-
-@interface AppDelegate ()
-
+#import <DropboxSDK/DropboxSDK.h>
+#import "ViewController.h"
+@interface AppDelegate ()<DBSessionDelegate, DBNetworkRequestDelegate>
 @end
 
 @implementation AppDelegate
-
+@synthesize navigationController;
+@synthesize window;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     sleep(1);
+    
+    NSString *dropBoxAppKey = @"e5pwc7gq7s6s881";
+    NSString *dropBoxAppSecret = @"mdsexprr4uc7xwr";
+    NSString *root = kDBRootDropbox;
+    DBSession* session = [[DBSession alloc] initWithAppKey:dropBoxAppKey appSecret:dropBoxAppSecret root:root];
+    session.delegate = self;
+    [DBSession setSharedSession:session];
+    [DBRequest setNetworkRequestDelegate:self];
+    
+    if ([[DBSession sharedSession] isLinked]) {
+        self.navigationController.viewControllers =
+        [NSArray arrayWithObjects:viewController, nil];
+    }
+
+    [window addSubview:navigationController.view];
+    [window makeKeyAndVisible];
     return YES;
+}
+
+//Method for open URL
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url
+  sourceApplication:(NSString *)source annotation:(id)annotation {
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        if ([[DBSession sharedSession] isLinked]) {
+            [viewController uploadFileDropBox];
+        }
+        return YES;
+    }
+    // Add whatever other url handling code your app requires here
+    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -41,5 +71,47 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark -
+#pragma mark DBSessionDelegate methods
+
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
+    [[[UIAlertView alloc]
+       initWithTitle:@"Dropbox Session Ended" message:@"Do you want to relink?" delegate:self
+       cancelButtonTitle:@"Cancel" otherButtonTitles:@"Relink", nil]
+     show];
+}
+
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)index {
+    if (index != alertView.cancelButtonIndex) {
+        [[DBSession sharedSession] linkUserId:relinkUserId fromController:viewController];
+    }
+    relinkUserId = nil;
+}
+
+
+#pragma mark -
+#pragma mark DBNetworkRequestDelegate methods
+
+static int outstandingRequests;
+
+- (void)networkRequestStarted {
+    outstandingRequests++;
+    if (outstandingRequests == 1) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    }
+}
+
+- (void)networkRequestStopped {
+    outstandingRequests--;
+    if (outstandingRequests == 0) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }
+}
+
 
 @end

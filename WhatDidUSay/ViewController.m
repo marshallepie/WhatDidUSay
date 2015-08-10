@@ -10,8 +10,9 @@
 
 #import "ViewController.h"
 #import "CustomTableViewCell.h"
+#import <DropboxSDK/DropboxSDK.h>
 
-@interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface ViewController ()<UITableViewDataSource, UITableViewDelegate, DBRestClientDelegate>
 {
     NSMutableArray *recordedArray;
     NSIndexPath    *clickIndex;
@@ -24,8 +25,8 @@
     NSString *audioFile;
     IBOutlet UIButton *deleteButton;
     NSMutableDictionary *boolArray;
-
 }
+@property (nonatomic, strong) DBRestClient* restClient;
 -(IBAction)deleteAction:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITableView *recordTableView;
@@ -61,8 +62,7 @@
     [actView stopAnimating];
     
     UINib *countryNib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
-    [self.recordTableView registerNib:countryNib
-         forCellReuseIdentifier:@"customCell"];
+    [self.recordTableView registerNib:countryNib forCellReuseIdentifier:@"customCell"];
     
     //Long Gesture
     longGesture = [[UILongPressGestureRecognizer alloc]
@@ -70,6 +70,10 @@
     longGesture.minimumPressDuration = 1.0; //seconds
     longGesture.delegate = self;
     [recordTableView addGestureRecognizer:longGesture];
+    
+    
+    self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    self.restClient.delegate = self;
 }
 
 #pragma mark- Long gesture
@@ -87,7 +91,7 @@
             
             audioFile=[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, [arrFiles objectAtIndex:indexPath.row]];
             
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Export your Recording." delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mail",@"Text",@"DropBox", nil];
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Export your Recording" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mail",@"Text",@"DropBox", nil];
             actionSheet.tag=1;
             [actionSheet showInView:self.view];
         }
@@ -131,11 +135,46 @@
         }
         else if(buttonIndex==2)
         {
+            if (![[DBSession sharedSession] isLinked]) {
+                [[DBSession sharedSession] linkFromController:self];
+            }
+            else{
+                [self uploadFileDropBox];
+            }
             
         }
+
     }
 }
 
+//File upload to dropBox
+-(void)uploadFileDropBox{
+    NSString *text = @"Hello world.";
+    NSString *filename = @"AudioFile";
+    NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *localPath = [localDir stringByAppendingPathComponent:filename];
+    [text writeToFile:localPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    
+    // Upload file to Dropbox
+    NSString *destDir = @"/";
+    [self.restClient uploadFile:filename toPath:destDir withParentRev:nil fromPath:audioFile];
+
+}
+#pragma mark - DBRestClient Delegate
+- (void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath
+              from:(NSString *)srcPath metadata:(DBMetadata *)metadata {
+    NSLog(@"File uploaded successfully to path: %@", metadata.path);
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Messsage!" message:@"File uploaded successfully to DropBox" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)restClient:(DBRestClient *)client uploadFileFailedWithError:(NSError *)error {
+    NSLog(@"File upload failed with error: %@", error);
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Messsage!" message:@"File uploaded failed." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+
+}
+          
 #pragma mark - Mail Delagate
 - (void)mailComposeController:(MFMailComposeViewController*)mailController didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
     if (result==MFMailComposeResultSent){
@@ -212,6 +251,7 @@
     return YES;
 }
 
+#pragma mark table view delegates and data source methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
@@ -235,8 +275,7 @@
             }
         }
         
-        if (isPlay == TRUE) {
-            
+        if (isPlay == TRUE){
         }
         else{
             if ([[playingStateArray objectAtIndex:indexPath.row] isEqualToString:@"Yes"]) {
@@ -263,44 +302,9 @@
 }
 
 - (void)playTimerAction{
-    
 }
 
--(IBAction)deleteAction:(id)sender{
-    NSMutableArray *arr1=[[NSMutableArray alloc]init];
 
-    for(int i =0;i<[boolArray count];i++){
-        NSString *dic=[arrFiles objectAtIndex:i];
-        BOOL checked=[[boolArray objectForKey:dic]boolValue];
-        if(checked){
-           NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            [arr1 addObject:indexPath];
-        }
-    }
-    
-        NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
-        for (NSIndexPath *selectionIndex in arr1){
-            [indicesOfItemsToDelete addIndex:selectionIndex.row];
-        }
-        [arrFiles removeObjectsAtIndexes:indicesOfItemsToDelete];
-        [dateArray removeObjectsAtIndexes:indicesOfItemsToDelete];
-        [timeArray removeObjectsAtIndexes:indicesOfItemsToDelete];
-        
-    
-        [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:@"StoredFiles"];
-        [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:@"DateArray"];
-        [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:@"TimeArray"];
-        
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [boolArray removeAllObjects];
-    for(int i=0; i<arrFiles.count; i++){
-        NSString *str=[arrFiles objectAtIndex:i];
-        [boolArray setValue:[NSNumber numberWithBool:NO] forKey:str];
-    }
-    [recordTableView reloadData];
-    
-}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (arrFiles.count == 0) {
@@ -351,6 +355,42 @@
     return cell;
 }
 
+//Method for deleting multiple row
+-(IBAction)deleteAction:(id)sender{
+    NSMutableArray *arr1=[[NSMutableArray alloc]init];
+    
+    for(int i =0;i<[boolArray count];i++){
+        NSString *dic=[arrFiles objectAtIndex:i];
+        BOOL checked=[[boolArray objectForKey:dic]boolValue];
+        if(checked){
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            [arr1 addObject:indexPath];
+        }
+    }
+    
+    NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
+    for (NSIndexPath *selectionIndex in arr1){
+        [indicesOfItemsToDelete addIndex:selectionIndex.row];
+    }
+    [arrFiles removeObjectsAtIndexes:indicesOfItemsToDelete];
+    [dateArray removeObjectsAtIndexes:indicesOfItemsToDelete];
+    [timeArray removeObjectsAtIndexes:indicesOfItemsToDelete];
+    
+    
+    [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:@"StoredFiles"];
+    [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:@"DateArray"];
+    [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:@"TimeArray"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [boolArray removeAllObjects];
+    for(int i=0; i<arrFiles.count; i++){
+        NSString *str=[arrFiles objectAtIndex:i];
+        [boolArray setValue:[NSNumber numberWithBool:NO] forKey:str];
+    }
+    [recordTableView reloadData];
+    
+}
 -(void)useButton:(id)sender{
     NSString *dic=[arrFiles objectAtIndex:[sender tag]];
     BOOL  checked1 = [[boolArray objectForKey:dic] boolValue];

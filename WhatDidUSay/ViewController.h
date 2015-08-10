@@ -34,6 +34,6 @@
     AVAudioRecorder *recorder;
     AVAudioPlayer  *audioPlayer;
 }
-
+-(void)uploadFileDropBox;
 @end
 

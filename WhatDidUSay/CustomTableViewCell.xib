@@ -42,7 +42,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0H8-6w-p7E">
-                        <rect key="frame" x="224" y="18" width="62" height="25"/>
+                        <rect key="frame" x="203" y="18" width="62" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="YM4-Bh-jvl"/>
                             <constraint firstAttribute="width" constant="62" id="iYF-nH-Khv"/>
@@ -52,10 +52,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAl-qy-Ga8">
-                        <rect key="frame" x="287" y="16" width="30" height="30"/>
+                        <rect key="frame" x="270" y="11" width="43" height="39"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="3xH-MZ-P0p"/>
-                            <constraint firstAttribute="width" constant="30" id="f0U-Vy-PHg"/>
+                            <constraint firstAttribute="height" constant="39" id="3xH-MZ-P0p"/>
+                            <constraint firstAttribute="width" constant="43" id="f0U-Vy-PHg"/>
                         </constraints>
                         <state key="normal" image="Pass_Uncheck.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,19 +67,19 @@
                 </subviews>
                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="GAl-qy-Ga8" firstAttribute="leading" secondItem="0H8-6w-p7E" secondAttribute="trailing" constant="1" id="3qP-nN-8RO"/>
+                    <constraint firstItem="GAl-qy-Ga8" firstAttribute="leading" secondItem="0H8-6w-p7E" secondAttribute="trailing" constant="5" id="3qP-nN-8RO"/>
                     <constraint firstItem="47e-W8-khN" firstAttribute="top" secondItem="TUS-h5-pr5" secondAttribute="bottom" constant="1" id="5aS-bp-Wd4"/>
                     <constraint firstItem="3US-lv-Cgb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="Amz-Tl-NpJ"/>
                     <constraint firstItem="47e-W8-khN" firstAttribute="top" secondItem="TUS-h5-pr5" secondAttribute="bottom" constant="1" id="DKS-lG-vW5"/>
                     <constraint firstItem="TUS-h5-pr5" firstAttribute="leading" secondItem="3US-lv-Cgb" secondAttribute="trailing" constant="20" id="IVc-HN-0Vo"/>
                     <constraint firstItem="47e-W8-khN" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Pfn-Rw-t7s"/>
                     <constraint firstItem="3US-lv-Cgb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QFW-Ll-mME"/>
-                    <constraint firstItem="GAl-qy-Ga8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="Uno-w1-hUf"/>
+                    <constraint firstItem="GAl-qy-Ga8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="Uno-w1-hUf"/>
                     <constraint firstAttribute="bottomMargin" secondItem="3US-lv-Cgb" secondAttribute="bottom" constant="6" id="iG2-oM-cPP"/>
                     <constraint firstItem="0H8-6w-p7E" firstAttribute="centerY" secondItem="3US-lv-Cgb" secondAttribute="centerY" id="iMl-TX-cqO"/>
                     <constraint firstItem="47e-W8-khN" firstAttribute="leading" secondItem="3US-lv-Cgb" secondAttribute="trailing" constant="20" id="lu6-op-UWq"/>
                     <constraint firstItem="TUS-h5-pr5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="oRV-ZE-50J"/>
-                    <constraint firstItem="0H8-6w-p7E" firstAttribute="leading" secondItem="47e-W8-khN" secondAttribute="trailing" constant="20" id="xQZ-pC-U0x"/>
+                    <constraint firstItem="0H8-6w-p7E" firstAttribute="leading" secondItem="47e-W8-khN" secondAttribute="trailing" constant="-1" id="xQZ-pC-U0x"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
