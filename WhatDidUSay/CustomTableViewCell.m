@@ -19,8 +19,13 @@
 
     // Configure the view for the selected state
 }
+
 -(IBAction)selectedAction:(id)sender{
     [self.delegate useButton:self];
+}
+
+-(IBAction)labelAction:(id)sender{
+    [self.delegate useButton_label:self];
 }
 
 @end

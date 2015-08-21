@@ -14,16 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUS-h5-pr5">
-                        <rect key="frame" x="61" y="8" width="143" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="H1g-sL-lPO"/>
-                            <constraint firstAttribute="width" constant="143" id="RPP-EE-1hd"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Optima-Bold" family="Optima" pointSize="18"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47e-W8-khN">
                         <rect key="frame" x="61" y="30" width="143" height="21"/>
                         <constraints>
@@ -64,27 +54,39 @@
                             <action selector="selectedAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="h8I-WP-pb6"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TpT-DL-8fR">
+                        <rect key="frame" x="61" y="8" width="143" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="143" id="i2V-9w-syk"/>
+                            <constraint firstAttribute="height" constant="21" id="rzb-z1-XVc"/>
+                        </constraints>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="labelAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xeN-FE-EoG"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="GAl-qy-Ga8" firstAttribute="leading" secondItem="0H8-6w-p7E" secondAttribute="trailing" constant="5" id="3qP-nN-8RO"/>
-                    <constraint firstItem="47e-W8-khN" firstAttribute="top" secondItem="TUS-h5-pr5" secondAttribute="bottom" constant="1" id="5aS-bp-Wd4"/>
                     <constraint firstItem="3US-lv-Cgb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="Amz-Tl-NpJ"/>
-                    <constraint firstItem="47e-W8-khN" firstAttribute="top" secondItem="TUS-h5-pr5" secondAttribute="bottom" constant="1" id="DKS-lG-vW5"/>
-                    <constraint firstItem="TUS-h5-pr5" firstAttribute="leading" secondItem="3US-lv-Cgb" secondAttribute="trailing" constant="20" id="IVc-HN-0Vo"/>
                     <constraint firstItem="47e-W8-khN" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Pfn-Rw-t7s"/>
                     <constraint firstItem="3US-lv-Cgb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QFW-Ll-mME"/>
                     <constraint firstItem="GAl-qy-Ga8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="Uno-w1-hUf"/>
+                    <constraint firstItem="TpT-DL-8fR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="VND-NM-2xR"/>
                     <constraint firstAttribute="bottomMargin" secondItem="3US-lv-Cgb" secondAttribute="bottom" constant="6" id="iG2-oM-cPP"/>
                     <constraint firstItem="0H8-6w-p7E" firstAttribute="centerY" secondItem="3US-lv-Cgb" secondAttribute="centerY" id="iMl-TX-cqO"/>
                     <constraint firstItem="47e-W8-khN" firstAttribute="leading" secondItem="3US-lv-Cgb" secondAttribute="trailing" constant="20" id="lu6-op-UWq"/>
-                    <constraint firstItem="TUS-h5-pr5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="oRV-ZE-50J"/>
+                    <constraint firstItem="TpT-DL-8fR" firstAttribute="leading" secondItem="3US-lv-Cgb" secondAttribute="trailing" constant="20" id="oQb-J1-n5c"/>
                     <constraint firstItem="0H8-6w-p7E" firstAttribute="leading" secondItem="47e-W8-khN" secondAttribute="trailing" constant="-1" id="xQZ-pC-U0x"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateLbl" destination="47e-W8-khN" id="x8U-27-lSp"/>
-                <outlet property="numberLbl" destination="TUS-h5-pr5" id="Afh-cS-O38"/>
+                <outlet property="numberLbl" destination="TpT-DL-8fR" id="kD8-ph-zjW"/>
                 <outlet property="selectedBtn" destination="GAl-qy-Ga8" id="zlw-Dv-cOV"/>
                 <outlet property="stateImg" destination="3US-lv-Cgb" id="jUz-DZ-RCw"/>
                 <outlet property="timeLineLbl" destination="0H8-6w-p7E" id="odF-oO-kYp"/>

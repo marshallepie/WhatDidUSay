@@ -15,6 +15,7 @@
 @implementation AppDelegate
 @synthesize navigationController;
 @synthesize window;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     sleep(1);
@@ -27,11 +28,14 @@
     [DBSession setSharedSession:session];
     [DBRequest setNetworkRequestDelegate:self];
     
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isApplicationLaunchedFirstTime"]) {
+        [[NSUserDefaults standardUserDefaults] setInteger:10 forKey:@"SliderValueChanged"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isApplicationLaunchedFirstTime"];
+    }
     if ([[DBSession sharedSession] isLinked]) {
         self.navigationController.viewControllers =
         [NSArray arrayWithObjects:viewController, nil];
     }
-
     [window addSubview:navigationController.view];
     [window makeKeyAndVisible];
     return YES;
@@ -92,7 +96,6 @@
     }
     relinkUserId = nil;
 }
-
 
 #pragma mark -
 #pragma mark DBNetworkRequestDelegate methods

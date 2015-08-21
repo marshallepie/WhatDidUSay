@@ -25,13 +25,13 @@
 		8121543E1B5B45F20009D359 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8121543D1B5B45F20009D359 /* UIKit.framework */; };
 		812154401B5B45FA0009D359 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8121543F1B5B45FA0009D359 /* Foundation.framework */; };
 		812154421B5B45FF0009D359 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812154411B5B45FF0009D359 /* AVFoundation.framework */; };
+		FD7BD3461B7C82E100E951B1 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7BD3451B7C82E100E951B1 /* SettingViewController.m */; };
+		FD7BD3481B7C894F00E951B1 /* settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7BD3471B7C894F00E951B1 /* settings@3x.png */; };
 		FDC227B01B7875A40031A92B /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227AF1B7875A40031A92B /* DropboxSDK.framework */; };
 		FDC227B21B7875BF0031A92B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227B11B7875BE0031A92B /* Security.framework */; };
 		FDC227B41B7875C70031A92B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227B31B7875C70031A92B /* QuartzCore.framework */; };
 		FDE744F21B7485D6004D229E /* Pass_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F11B7485D6004D229E /* Pass_check@2x.png */; };
 		FDE744F41B7485DB004D229E /* Pass_Uncheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */; };
-		FDE744F71B74DFED004D229E /* unchecked-orange.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F51B74DFED004D229E /* unchecked-orange.png */; };
-		FDE744F81B74DFED004D229E /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F61B74DFED004D229E /* checked.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,13 +60,14 @@
 		8121543D1B5B45F20009D359 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8121543F1B5B45FA0009D359 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		812154411B5B45FF0009D359 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FD7BD3441B7C82E100E951B1 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		FD7BD3451B7C82E100E951B1 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		FD7BD3471B7C894F00E951B1 /* settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@3x.png"; sourceTree = "<group>"; };
 		FDC227AF1B7875A40031A92B /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		FDC227B11B7875BE0031A92B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FDC227B31B7875C70031A92B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FDE744F11B7485D6004D229E /* Pass_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pass_check@2x.png"; sourceTree = "<group>"; };
 		FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pass_Uncheck@2x.png"; sourceTree = "<group>"; };
-		FDE744F51B74DFED004D229E /* unchecked-orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked-orange.png"; sourceTree = "<group>"; };
-		FDE744F61B74DFED004D229E /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +118,8 @@
 				812154041B5A5EC30009D359 /* AppDelegate.m */,
 				812154061B5A5EC30009D359 /* ViewController.h */,
 				812154071B5A5EC30009D359 /* ViewController.m */,
+				FD7BD3441B7C82E100E951B1 /* SettingViewController.h */,
+				FD7BD3451B7C82E100E951B1 /* SettingViewController.m */,
 				812154251B5A81300009D359 /* CustomTableViewCell.h */,
 				812154261B5A81300009D359 /* CustomTableViewCell.m */,
 				812154271B5A81300009D359 /* CustomTableViewCell.xib */,
@@ -130,10 +133,9 @@
 		812153FF1B5A5EC30009D359 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FDE744F51B74DFED004D229E /* unchecked-orange.png */,
-				FDE744F61B74DFED004D229E /* checked.png */,
 				FDE744F11B7485D6004D229E /* Pass_check@2x.png */,
 				FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */,
+				FD7BD3471B7C894F00E951B1 /* settings@3x.png */,
 				812154001B5A5EC30009D359 /* Info.plist */,
 				812154011B5A5EC30009D359 /* main.m */,
 			);
@@ -229,16 +231,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDE744F81B74DFED004D229E /* checked.png in Resources */,
 				812154391B5B0D9F0009D359 /* recStartBtn.png in Resources */,
 				8121543C1B5B11770009D359 /* pauseBtn.png in Resources */,
 				8121540B1B5A5EC30009D359 /* Main.storyboard in Resources */,
 				812154381B5B0D9F0009D359 /* recordingBtn.png in Resources */,
 				812154301B5A82970009D359 /* stopBtn.png in Resources */,
 				8121543A1B5B0D9F0009D359 /* recStopBtn.png in Resources */,
-				FDE744F71B74DFED004D229E /* unchecked-orange.png in Resources */,
 				FDE744F41B7485DB004D229E /* Pass_Uncheck@2x.png in Resources */,
 				FDE744F21B7485D6004D229E /* Pass_check@2x.png in Resources */,
+				FD7BD3481B7C894F00E951B1 /* settings@3x.png in Resources */,
 				812154341B5B09790009D359 /* recBtn.png in Resources */,
 				812154291B5A81300009D359 /* CustomTableViewCell.xib in Resources */,
 				8121540D1B5A5EC30009D359 /* Images.xcassets in Resources */,
@@ -258,6 +259,7 @@
 				812154051B5A5EC30009D359 /* AppDelegate.m in Sources */,
 				812154281B5A81300009D359 /* CustomTableViewCell.m in Sources */,
 				812154021B5A5EC30009D359 /* main.m in Sources */,
+				FD7BD3461B7C82E100E951B1 /* SettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +372,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = WhatDidUSay/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -388,7 +390,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = WhatDidUSay/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -12,7 +12,7 @@
 #import <MessageUI/MessageUI.h>
 #import "CustomTableViewCell.h"
 
-@interface ViewController : UIViewController<AVAudioRecorderDelegate, AVAudioPlayerDelegate,UIGestureRecognizerDelegate, UIActionSheetDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,ButtonDelegate>
+@interface ViewController : UIViewController<AVAudioRecorderDelegate, AVAudioPlayerDelegate,UIGestureRecognizerDelegate, UIActionSheetDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,ButtonDelegate,UIAlertViewDelegate,UITextFieldDelegate>
 
 {
     IBOutlet UIButton *whatSayBtn;
@@ -28,6 +28,7 @@
     NSMutableArray *arrFiles;
     NSMutableArray *dateArray;
     NSMutableArray *timeArray;
+    NSMutableArray *fileNameArray;
     
     NSMutableDictionary *recordSetting;
     
