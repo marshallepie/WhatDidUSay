@@ -472,7 +472,7 @@ const char MyConstantKey;
 }
 
 - (IBAction)startBtnClicked:(id)sender {
-    recordLbl.text = @"Start to record";
+    recordLbl.text = @"Monitoring";
     
     //Start button method. Hiding animations.
     actView.hidden = TRUE;
@@ -610,7 +610,7 @@ const char MyConstantKey;
                         
                         [recordTableView reloadData];
               
-                        recordLbl.text = @"Saved";
+                        recordLbl.text = @"Monitoring";
                     
 //                        if([recordLbl.text isEqualToString:@"Saved"]){
 //                            [self showAlert];
@@ -748,7 +748,7 @@ const char MyConstantKey;
 }
 
 -(IBAction)stopBtnClicked:(id)sender{
-    recordLbl.text = @"Stop to record";
+    recordLbl.text = @"Off";
     
     startBtn.enabled = TRUE;
     stopBtn.enabled = FALSE;
