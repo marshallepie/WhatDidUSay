@@ -685,8 +685,8 @@ const char MyConstantKey;
                                         [playingStateArray addObject:@"No"];
                                         [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:i]];
 
-                                        [timeArray addObject:@"10"];
-                                        
+                                        //[timeArray addObject:@"10"];//Add slider time here
+                                        [timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
                                         NSString *str=[NSString stringWithFormat:@"Record"];
                                         [fileNameArray addObject:str];
                                     }
