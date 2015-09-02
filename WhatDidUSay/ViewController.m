@@ -551,7 +551,7 @@ const char MyConstantKey;
                         if(fileExists) {
                             if(arrFiles.count > 0){
                                 [boolArray removeAllObjects];
-
+                                
                                 for(int i = 0; i<arrFiles.count;i++){
                                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", arrFiles];
                                     BOOL result = [predicate evaluateWithObject:dateString];
@@ -570,13 +570,13 @@ const char MyConstantKey;
                                         
                                         NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
                                         [timeArray addObject:timeline];
-                                    
+                                        
                                         NSString *str=[NSString stringWithFormat:@"Record"];
                                         [fileNameArray addObject:str];
                                     }
                                 }
                             }
-                            else{
+                            else {
                                 [arrFiles addObject:dateString];
                                 
                                 NSDate *currentTime = [NSDate date];
@@ -603,19 +603,18 @@ const char MyConstantKey;
                         
                         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TimeArray"];
                         [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:@"TimeArray"];
-
+                        
                         [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:@"FileNameArray"];
                         
                         [[NSUserDefaults standardUserDefaults] synchronize];
                         
                         [recordTableView reloadData];
-              
+                        
                         recordLbl.text = @"Monitoring";
-                    
-//                        if([recordLbl.text isEqualToString:@"Saved"]){
-//                            [self showAlert];
-//                        }
-                    
+                        
+                        //                        if([recordLbl.text isEqualToString:@"Saved"]){
+                        //                            [self showAlert];
+                        //                        }
                         break;
                     default:
                         NSLog(@"Export Failed");
@@ -661,14 +660,12 @@ const char MyConstantKey;
                     case AVAssetExportSessionStatusCompleted:
                         NSLog(@"Export COMPLETED...");
                         
-                        
                         //Making sure that file has been created
                         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, dateString]];
-                        if(fileExists)
-                        {
-                            if(arrFiles.count > 0)
-                            {    [boolArray removeAllObjects];
-
+                        if(fileExists) {
+                            if(arrFiles.count > 0) {
+                                [boolArray removeAllObjects];
+                                
                                 for(int i = 0; i<arrFiles.count;i++) {
                                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", arrFiles];
                                     BOOL result = [predicate evaluateWithObject:dateString];
@@ -684,7 +681,7 @@ const char MyConstantKey;
                                         [dateArray addObject:date];
                                         [playingStateArray addObject:@"No"];
                                         [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:i]];
-
+                                        
                                         //[timeArray addObject:@"10"];//Add slider time here
                                         [timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
                                         NSString *str=[NSString stringWithFormat:@"Record"];
@@ -724,11 +721,10 @@ const char MyConstantKey;
                         [[NSUserDefaults standardUserDefaults] synchronize];
                         
                         [recordTableView reloadData];
-                        
-//                        recordLbl.text = @"Saved";
-//                        if([recordLbl.text isEqualToString:@"Saved"]){
-//                            [self showAlert];
-//                        }
+                        recordLbl.text = @"Monitoring";
+                        //                        if([recordLbl.text isEqualToString:@"Saved"]){
+                        //                            [self showAlert];
+                        //                        }
                         break;
                     default:
                         NSLog(@"Export Failed");
