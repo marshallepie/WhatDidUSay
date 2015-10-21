@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *stateImg;
 @property (weak, nonatomic) IBOutlet UIButton *selectedBtn;
 @property(strong,nonatomic)id<ButtonDelegate> delegate;
+
 -(IBAction)selectedAction:(id)sender;
 -(IBAction)labelAction:(id)sender;
+
 @end

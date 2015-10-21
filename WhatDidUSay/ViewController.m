@@ -13,7 +13,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import <objc/runtime.h>
 #import "SettingViewController.h"
-
+#import "InfoViewController.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate, DBRestClientDelegate> {
     NSMutableArray *recordedArray;
@@ -142,6 +142,11 @@ const char MyConstantKey;
     }
 }
 
+- (IBAction)infoButtonAction:(id)sender {
+    InfoViewController *infoViewController = [self.storyboard  instantiateViewControllerWithIdentifier:@"InfoViewController"];
+    [self.navigationController pushViewController:infoViewController animated:YES];
+}
+
 //File upload to dropBox
 -(void)uploadFileDropBox{
     NSString *text = @"Hello world.";
@@ -185,8 +190,8 @@ const char MyConstantKey;
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
-- (void) viewWillAppear:(BOOL)animated
-{
+- (void) viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = YES;
     //Loading the stored files into array.
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"StoredFiles"]) {
         arrFiles = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"StoredFiles"]];
@@ -341,10 +346,10 @@ const char MyConstantKey;
     cell.timeLineLbl.text = [NSString stringWithFormat:@"00:%@", [timeArray objectAtIndex:indexPath.row]];
     
     if ([[playingStateArray objectAtIndex:indexPath.row] isEqualToString:@"No"]) {
-        cell.stateImg.image=[UIImage imageNamed:@"playBtn.png"];
+        cell.stateImg.image=[UIImage imageNamed:@"WDUS-play.png"];
     }
     else{
-        cell.stateImg.image=[UIImage imageNamed:@"pauseBtn.png"];
+        cell.stateImg.image=[UIImage imageNamed:@"WDUS-pause.png"];
     }
     cell.delegate=self;
     

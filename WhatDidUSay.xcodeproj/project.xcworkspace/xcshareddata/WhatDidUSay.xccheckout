@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>1664DFDC-3F92-40E5-AB89-ED0FD223B1A7</string>
 	<key>IDESourceControlProjectName</key>
-	<string>WhatDidUSay</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2C697DF0A26ACF501BB8D0F665692A5C0A9836A2</key>
 		<string>https://github.com/marshallepie/WhatDidUSay.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>WhatDidUSay.xcodeproj</string>
+	<string>WhatDidUSay.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2C697DF0A26ACF501BB8D0F665692A5C0A9836A2</key>

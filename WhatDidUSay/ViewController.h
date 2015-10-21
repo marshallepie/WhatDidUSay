@@ -35,6 +35,7 @@
     AVAudioRecorder *recorder;
     AVAudioPlayer  *audioPlayer;
 }
+- (IBAction)infoButtonAction:(id)sender;
 -(void)uploadFileDropBox;
 @end
 
