@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jmR-0O-82p">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Z6z-og-CKe">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -29,7 +29,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Pxu-sr-mhy">
-                                <rect key="frame" x="0.0" y="95" width="600" height="405"/>
+                                <rect key="frame" x="0.0" y="95" width="600" height="356"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="MCZ-7Q-o4r">
@@ -42,7 +42,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kg9-gW-DtA">
-                                <rect key="frame" x="183" y="523" width="50" height="50"/>
+                                <rect key="frame" x="183" y="474" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="Vbn-SE-Sz7"/>
                                     <constraint firstAttribute="height" constant="50" id="jaM-OX-8g0"/>
@@ -56,7 +56,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZ5-AN-b2a">
-                                <rect key="frame" x="268" y="515" width="65" height="65"/>
+                                <rect key="frame" x="268" y="466" width="65" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="65" id="Ffz-Zf-jeL"/>
                                     <constraint firstAttribute="height" constant="65" id="vC9-8W-kHi"/>
@@ -104,7 +104,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yew-JV-wmQ">
-                                <rect key="frame" x="368" y="523" width="50" height="50"/>
+                                <rect key="frame" x="368" y="474" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Ai2-eU-MID"/>
                                     <constraint firstAttribute="width" constant="50" id="jsP-VJ-LcW"/>
@@ -117,7 +117,7 @@
                                     <action selector="stopBtnClicked:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="tRW-yA-JAr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UAw-y1-b9k">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UAw-y1-b9k">
                                 <rect key="frame" x="549" y="28" width="35" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="D1W-gq-bRV"/>
@@ -130,7 +130,7 @@
                                     <action selector="settingAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="CAs-aE-gDK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5TO-hw-OHt">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5TO-hw-OHt">
                                 <rect key="frame" x="16" y="32" width="22" height="22"/>
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -171,6 +171,9 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Pxu-sr-mhy" secondAttribute="bottom" constant="100" id="zmZ-y0-H1F"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" image="home-icon.png" id="S4I-4x-3wn">
+                        <inset key="imageInsets" minX="0.0" minY="7" maxX="0.0" maxY="-7"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="AWB-hH-v58"/>
                     <connections>
                         <outlet property="actView" destination="MCZ-7Q-o4r" id="IXE-U9-XpD"/>
@@ -186,7 +189,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="783" y="169"/>
+            <point key="canvasLocation" x="1008" y="-163"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="doT-s2-z0u">
@@ -210,7 +213,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qPb-oP-T2g">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qPb-oP-T2g">
                                 <rect key="frame" x="16" y="38" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="46" id="MKk-E7-xtB"/>
@@ -253,6 +256,9 @@
                             <constraint firstAttribute="centerX" secondItem="Cul-Q8-MvE" secondAttribute="centerX" id="ytM-yW-jNJ"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" image="settings.png" id="Htj-bX-vcp">
+                        <inset key="imageInsets" minX="0.0" minY="7" maxX="0.0" maxY="-7"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="backButton" destination="qPb-oP-T2g" id="vgD-wN-wVo"/>
                         <outlet property="lblDuration" destination="c4c-aV-wg8" id="dIP-1Y-9mP"/>
@@ -261,7 +267,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Efi-nd-7hD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1534" y="169"/>
+            <point key="canvasLocation" x="999" y="531"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="UMz-Ol-IFR">
@@ -275,7 +281,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="su8-eg-WWp">
+                            <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="su8-eg-WWp">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -296,6 +302,9 @@
                             <constraint firstAttribute="centerY" secondItem="Izv-fh-Te0" secondAttribute="centerY" id="t1t-aW-dQL"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" image="info.png" id="xIH-Ht-Jcn">
+                        <inset key="imageInsets" minX="0.0" minY="7" maxX="0.0" maxY="-7"/>
+                    </tabBarItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="activityIndicator" destination="Izv-fh-Te0" id="5Ll-zy-UaL"/>
@@ -304,24 +313,30 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lIp-pT-oWT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2169" y="169"/>
+            <point key="canvasLocation" x="1684" y="169"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="gt4-Iu-S7j">
+        <!--Tab Bar Controller-->
+        <scene sceneID="aDQ-g8-Ahk">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="jmR-0O-82p" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Z6z-og-CKe" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="94y-1l-BuN">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="q19-df-K8y">
                         <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="selectedImageTintColor">
+                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBar>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="qBs-Qg-zsa"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="FyV-Rj-awy"/>
+                        <segue destination="Kgi-Wl-BEU" kind="relationship" relationship="viewControllers" id="AXX-ph-Vg5"/>
+                        <segue destination="XTF-o2-PNH" kind="relationship" relationship="viewControllers" id="Jlf-qu-1yf"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3m2-vz-CAh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9m3-Zy-c0k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="101" y="169"/>
         </scene>
@@ -330,6 +345,9 @@
         <image name="WDUS-capture.png" width="75" height="75"/>
         <image name="WDUS-start.png" width="65" height="65"/>
         <image name="WDUS-stop.png" width="65" height="65"/>
+        <image name="home-icon.png" width="30" height="30"/>
+        <image name="info.png" width="30" height="30"/>
+        <image name="settings.png" width="70" height="70"/>
         <image name="settings@3x.png" width="78" height="78"/>
     </resources>
 </document>

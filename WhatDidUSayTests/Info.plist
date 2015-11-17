@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>daniel.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>com.marshallepie.WhatDidUSay</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -27,6 +27,8 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>UINewsstandApp</key>
+	<true/>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 </dict>

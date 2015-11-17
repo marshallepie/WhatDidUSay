@@ -14,8 +14,14 @@
 #import <objc/runtime.h>
 #import "SettingViewController.h"
 #import "InfoViewController.h"
+#import "RageIAPHelper.h"
+#import <StoreKit/StoreKit.h>
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate, DBRestClientDelegate> {
+    
+    NSArray *_products;
+    NSNumberFormatter * _priceFormatter;
+    
     NSMutableArray *recordedArray;
     NSIndexPath    *clickIndex;
     
@@ -48,6 +54,11 @@ const char MyConstantKey;
     [super viewDidLoad];
     
     count = 0;
+    
+    _priceFormatter = [[NSNumberFormatter alloc] init];
+    [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    
     // Do any additional setup after loading the view, typically from a nib.
     recordTableView.delegate = self;
     recordTableView.dataSource = self;
@@ -104,42 +115,105 @@ const char MyConstantKey;
 
 #pragma mark -Action Sheet Delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(actionSheet.tag==1)
-    {
+    if(actionSheet.tag==1) {
         if (buttonIndex == 0){
-            NSURL *url = [[NSURL alloc]initFileURLWithPath:audioFile];
-            NSData *soundFile = [[NSData alloc] initWithContentsOfURL:url];
+            NSMutableArray *arr1=[[NSMutableArray alloc]init];
+            for(int i =0;i<[boolArray count];i++) {
+                NSString *dic=[arrFiles objectAtIndex:i];
+                BOOL checked=[[boolArray objectForKey:dic]boolValue];
+                if(checked){
+                    [arr1 addObject:[arrFiles objectAtIndex:i]];
+                }
+            }
+
+            if (arr1.count==0) {
+                [[[UIAlertView alloc]initWithTitle:@"Alert!" message:@"Please select file to mail." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            } else {
+                [self mailMultipleFiles];
+            }
+            //NSURL *url = [[NSURL alloc]initFileURLWithPath:audioFile];
+            //NSData *soundFile = [[NSData alloc] initWithContentsOfURL:url];
             
-            MFMailComposeViewController *controller =
-            [[MFMailComposeViewController alloc]init];
-            controller.mailComposeDelegate = self;
-            [controller addAttachmentData:soundFile mimeType:@"audio/mpeg" fileName:@""];
-            [controller setSubject:@"Demo Audio File"];
-            [controller setMessageBody:@"Dummy Text" isHTML:NO];
-            [self presentViewController:controller animated: YES completion:nil];
+            
         }
         else if(buttonIndex == 1){
-            MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+            //MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
             if([MFMessageComposeViewController canSendAttachments] &&
                [MFMessageComposeViewController canSendText] &&
-               [MFMessageComposeViewController isSupportedAttachmentUTI:@"com.apple.coreaudio-​format"]){
-                controller.body = @"Dummy Text";
+               [MFMessageComposeViewController isSupportedAttachmentUTI:@"com.apple.coreaudio-​format"]) {
+                NSMutableArray *arr1=[[NSMutableArray alloc]init];
+                for(int i =0;i<[boolArray count];i++) {
+                    NSString *dic=[arrFiles objectAtIndex:i];
+                    BOOL checked=[[boolArray objectForKey:dic]boolValue];
+                    if(checked){
+                        [arr1 addObject:[arrFiles objectAtIndex:i]];
+                    }
+                }
+                
+                if (arr1.count==0) {
+                    [[[UIAlertView alloc]initWithTitle:@"Alert!" message:@"Please select file to message." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                } else {
+                    [self messageMulitpleFiles];
+                }
+                /*controller.body = @"Dummy Text";
                 NSURL *url = [[NSURL alloc]initFileURLWithPath:audioFile];
                 [controller addAttachmentURL:url withAlternateFilename:nil]; //.caf file
                 controller.recipients = [NSArray arrayWithObjects:@"1(234)567-8910", nil];
                 controller.messageComposeDelegate = self;
-                [self presentViewController:controller animated:YES completion:nil];
+                [self presentViewController:controller animated:YES completion:nil];*/
+            } else {
+                
             }
         }
         else if(buttonIndex==2){
             if (![[DBSession sharedSession] isLinked]){
                 [[DBSession sharedSession] linkFromController:self];
             }
-            else{
+            else {
                 [self uploadFileDropBox];
             }
         }
     }
+}
+- (void)messageMulitpleFiles {
+    MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+    if([MFMessageComposeViewController canSendAttachments] &&
+       [MFMessageComposeViewController canSendText] &&
+       [MFMessageComposeViewController isSupportedAttachmentUTI:@"com.apple.coreaudio-​format"]) {
+        controller.body = @"Dummy Text";
+        //NSURL *url = [[NSURL alloc]initFileURLWithPath:audioFile];
+        //[controller addAttachmentURL:url withAlternateFilename:nil]; //.caf file
+        for(int i =0;i<[boolArray count];i++) {
+            NSString *dic=[arrFiles objectAtIndex:i];
+            BOOL checked=[[boolArray objectForKey:dic]boolValue];
+            if(checked) {
+                NSURL *url = [[NSURL alloc]initFileURLWithPath:[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, [arrFiles objectAtIndex:i]]];
+                //NSData *soundFile = [[NSData alloc] initWithContentsOfURL:url];
+                [controller addAttachmentURL:url withAlternateFilename:nil];
+            }
+        }
+        controller.recipients = [NSArray arrayWithObjects:@"1(234)567-8910", nil];
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+}
+- (void)mailMultipleFiles {
+    MFMailComposeViewController *controller =
+    [[MFMailComposeViewController alloc]init];
+    controller.mailComposeDelegate = self;
+    for(int i =0;i<[boolArray count];i++) {
+        NSString *dic=[arrFiles objectAtIndex:i];
+        BOOL checked=[[boolArray objectForKey:dic]boolValue];
+        if(checked) {
+            NSURL *url = [[NSURL alloc]initFileURLWithPath:[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, [arrFiles objectAtIndex:i]]];
+            NSData *soundFile = [[NSData alloc] initWithContentsOfURL:url];
+            [controller addAttachmentData:soundFile mimeType:@"audio/mpeg" fileName:@""];
+        }
+    }
+    //[controller addAttachmentData:soundFile mimeType:@"audio/mpeg" fileName:@""];
+    [controller setSubject:@"Demo Audio File"];
+    [controller setMessageBody:@"Dummy Text" isHTML:NO];
+    [self presentViewController:controller animated: YES completion:nil];
 }
 
 - (IBAction)infoButtonAction:(id)sender {
@@ -148,7 +222,7 @@ const char MyConstantKey;
 }
 
 //File upload to dropBox
--(void)uploadFileDropBox{
+-(void)uploadFileDropBox {
     NSString *text = @"Hello world.";
     NSString *filename = @"AudioFile";
     NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
@@ -190,19 +264,41 @@ const char MyConstantKey;
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
+- (void)productPurchased:(NSNotification *)notification {
+    
+    NSString * productIdentifier = notification.object;
+    [_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
+        if ([product.productIdentifier isEqualToString:productIdentifier]) {
+            //[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+            *stop = YES;
+        }
+    }];
+}
+
+- (void)buyButtonTapped:(id)sender {
+    UIButton *buyButton = (UIButton *)sender;
+    SKProduct *product = _products[buyButton.tag];
+    NSLog(@"Buying %@...", product.productIdentifier);
+    [[RageIAPHelper sharedInstance] buyProduct:product];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
     //Loading the stored files into array.
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"StoredFiles"]) {
         arrFiles = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"StoredFiles"]];
         
-        NSLog(@"Files %@", arrFiles);
+        //NSLog(@"Files %@", arrFiles);
         if (arrFiles.count == 0) {
             recordTableView.hidden = YES;
             stateLbl.hidden = NO;
             deleteButton.hidden = YES;
-        }
-        else{
+        } else {
             recordTableView.hidden = NO;
             stateLbl.hidden = YES;
             deleteButton.hidden=NO;
@@ -282,8 +378,7 @@ const char MyConstantKey;
                 [playingStateArray replaceObjectAtIndex:indexPath.row withObject:@"No"];
                 [recordTableView reloadData];
                 [audioPlayer stop];
-            }
-            else{
+            } else {
                 [playingStateArray replaceObjectAtIndex:indexPath.row withObject:@"Yes"];
                 [recordTableView reloadData];
                 
@@ -328,7 +423,7 @@ const char MyConstantKey;
     static NSString *simpleTableIdentifier = @"customCell";
     
     CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-    if([[fileNameArray objectAtIndex:indexPath.row] isEqualToString:@"Record"]){
+    if([[fileNameArray objectAtIndex:indexPath.row] isEqualToString:@"Snippet"]){
         //test
         int a=0;
         BOOL isSaved;
@@ -394,7 +489,7 @@ const char MyConstantKey;
 //Method for deleting multiple row
 -(IBAction)deleteAction:(id)sender{
     NSMutableArray *arr1=[[NSMutableArray alloc]init];
-    for(int i =0;i<[boolArray count];i++){
+    for(int i =0;i<[boolArray count];i++) {
         NSString *dic=[arrFiles objectAtIndex:i];
         BOOL checked=[[boolArray objectForKey:dic]boolValue];
         if(checked){
@@ -576,7 +671,7 @@ const char MyConstantKey;
                                         NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
                                         [timeArray addObject:timeline];
                                         
-                                        NSString *str=[NSString stringWithFormat:@"Record"];
+                                        NSString *str=[NSString stringWithFormat:@"Snippet"];
                                         [fileNameArray addObject:str];
                                     }
                                 }
@@ -595,7 +690,7 @@ const char MyConstantKey;
                                 NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
                                 [timeArray addObject:timeline];
                                 
-                                NSString *str=[NSString stringWithFormat:@"Record"];
+                                NSString *str=[NSString stringWithFormat:@"Snippet"];
                                 [fileNameArray addObject:str];
                             }
                         }
@@ -670,11 +765,9 @@ const char MyConstantKey;
                         if(fileExists) {
                             if(arrFiles.count > 0) {
                                 [boolArray removeAllObjects];
-                                
                                 for(int i = 0; i<arrFiles.count;i++) {
                                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", arrFiles];
                                     BOOL result = [predicate evaluateWithObject:dateString];
-                                    
                                     if(result == FALSE){
                                         [arrFiles addObject:dateString];
                                         
@@ -689,7 +782,7 @@ const char MyConstantKey;
                                         
                                         //[timeArray addObject:@"10"];//Add slider time here
                                         [timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
-                                        NSString *str=[NSString stringWithFormat:@"Record"];
+                                        NSString *str=[NSString stringWithFormat:@"Snippet"];
                                         [fileNameArray addObject:str];
                                     }
                                 }
@@ -707,7 +800,7 @@ const char MyConstantKey;
                                 [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:0]];
                                 //[timeArray addObject:@"10"];
                                 [timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
-                                NSString *str=[NSString stringWithFormat:@"Record"];
+                                NSString *str=[NSString stringWithFormat:@"Snippet"];
                                 [fileNameArray addObject:str];
                             }
                         }
@@ -824,7 +917,6 @@ const char MyConstantKey;
         [cantRecordAlert show];
         return;
     }
-    
     [recorder record];
 }
 

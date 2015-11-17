@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import <DropboxSDK/DropboxSDK.h>
 #import "ViewController.h"
+#import "RageIAPHelper.h"
+
 @interface AppDelegate ()<DBSessionDelegate, DBNetworkRequestDelegate>
 @end
 
@@ -19,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     sleep(1);
-    
+    [RageIAPHelper sharedInstance];
     NSString *dropBoxAppKey = @"e5pwc7gq7s6s881";
     NSString *dropBoxAppSecret = @"mdsexprr4uc7xwr";
     NSString *root = kDBRootDropbox;
@@ -37,6 +39,9 @@
         [NSArray arrayWithObjects:viewController, nil];
     }
     [window addSubview:navigationController.view];
+    //[UITabBar appearance].backgroundImage = [UIImage imageNamed:@"TabBarBg-new.png"];
+
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"TabBarBg2.png"]];
     [window makeKeyAndVisible];
     return YES;
 }
@@ -80,12 +85,8 @@
 #pragma mark DBSessionDelegate methods
 
 - (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
-    [[[UIAlertView alloc]
-       initWithTitle:@"Dropbox Session Ended" message:@"Do you want to relink?" delegate:self
-       cancelButtonTitle:@"Cancel" otherButtonTitles:@"Relink", nil]
-     show];
+    [[[UIAlertView alloc] initWithTitle:@"Dropbox Session Ended" message:@"Do you want to relink?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Relink", nil] show];
 }
-
 
 #pragma mark -
 #pragma mark UIAlertViewDelegate methods

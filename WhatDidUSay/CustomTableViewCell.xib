@@ -32,11 +32,11 @@
                             <constraint firstAttribute="width" constant="32" id="MK0-6g-9Yn"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0H8-6w-p7E">
-                        <rect key="frame" x="203" y="18" width="62" height="25"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:12" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0H8-6w-p7E">
+                        <rect key="frame" x="212" y="18" width="53" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="YM4-Bh-jvl"/>
-                            <constraint firstAttribute="width" constant="62" id="iYF-nH-Khv"/>
+                            <constraint firstAttribute="width" constant="53" id="iYF-nH-Khv"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -79,12 +79,20 @@
                     <constraint firstItem="3US-lv-Cgb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QFW-Ll-mME"/>
                     <constraint firstItem="GAl-qy-Ga8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="Uno-w1-hUf"/>
                     <constraint firstItem="TpT-DL-8fR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="VND-NM-2xR"/>
+                    <constraint firstItem="GAl-qy-Ga8" firstAttribute="leading" secondItem="0H8-6w-p7E" secondAttribute="trailing" constant="5" id="YVt-fh-PR1"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="GAl-qy-Ga8" secondAttribute="trailing" constant="-1" id="c3s-xp-dGh"/>
                     <constraint firstAttribute="bottomMargin" secondItem="3US-lv-Cgb" secondAttribute="bottom" constant="6" id="iG2-oM-cPP"/>
                     <constraint firstItem="0H8-6w-p7E" firstAttribute="centerY" secondItem="3US-lv-Cgb" secondAttribute="centerY" constant="1.5" id="iMl-TX-cqO"/>
                     <constraint firstItem="47e-W8-khN" firstAttribute="leading" secondItem="3US-lv-Cgb" secondAttribute="trailing" constant="21" id="lu6-op-UWq"/>
                     <constraint firstItem="TpT-DL-8fR" firstAttribute="leading" secondItem="3US-lv-Cgb" secondAttribute="trailing" constant="21" id="oQb-J1-n5c"/>
                     <constraint firstItem="0H8-6w-p7E" firstAttribute="leading" secondItem="47e-W8-khN" secondAttribute="trailing" constant="-1" id="xQZ-pC-U0x"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="xQZ-pC-U0x"/>
+                        <exclude reference="3qP-nN-8RO"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="dateLbl" destination="47e-W8-khN" id="x8U-27-lSp"/>

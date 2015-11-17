@@ -20,11 +20,15 @@
 		812154341B5B09790009D359 /* recBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 812154331B5B09790009D359 /* recBtn.png */; };
 		812154381B5B0D9F0009D359 /* recordingBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 812154351B5B0D9F0009D359 /* recordingBtn.png */; };
 		812154391B5B0D9F0009D359 /* recStartBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 812154361B5B0D9F0009D359 /* recStartBtn.png */; };
-		8121543A1B5B0D9F0009D359 /* recStopBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 812154371B5B0D9F0009D359 /* recStopBtn.png */; };
 		8121543C1B5B11770009D359 /* pauseBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8121543B1B5B11770009D359 /* pauseBtn.png */; };
 		8121543E1B5B45F20009D359 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8121543D1B5B45F20009D359 /* UIKit.framework */; };
 		812154401B5B45FA0009D359 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8121543F1B5B45FA0009D359 /* Foundation.framework */; };
 		812154421B5B45FF0009D359 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812154411B5B45FF0009D359 /* AVFoundation.framework */; };
+		8B3C0F391BF9EBA8002D1F97 /* home-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3C0F381BF9EBA8002D1F97 /* home-icon@2x.png */; };
+		8B3C0F3D1BF9FD42002D1F97 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3C0F3C1BF9FD42002D1F97 /* settings@2x.png */; };
+		8B3C0F3F1BF9FDE2002D1F97 /* settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3C0F3E1BF9FDE2002D1F97 /* settings@3x.png */; };
+		8B3C0F471BFA0A0F002D1F97 /* TabBarBg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B3C0F461BFA0A0F002D1F97 /* TabBarBg2@2x.png */; };
+		8BD1D66D1BFB1A060083FF26 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD1D66C1BFB1A050083FF26 /* SystemConfiguration.framework */; };
 		FD4F177E1BD757B300FC8AF9 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4F177D1BD757B300FC8AF9 /* InfoViewController.m */; };
 		FD4F17C01BD760EF00FC8AF9 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17811BD760EE00FC8AF9 /* Icon-40@2x.png */; };
 		FD4F17C11BD760EF00FC8AF9 /* Icon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17821BD760EF00FC8AF9 /* Icon-40@3x.png */; };
@@ -98,10 +102,13 @@
 		FD4F18111BD7755800FC8AF9 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F180F1BD7755800FC8AF9 /* info@2x.png */; };
 		FD4F18121BD7755800FC8AF9 /* info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F18101BD7755800FC8AF9 /* info@3x.png */; };
 		FD7BD3461B7C82E100E951B1 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD7BD3451B7C82E100E951B1 /* SettingViewController.m */; };
-		FD7BD3481B7C894F00E951B1 /* settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD7BD3471B7C894F00E951B1 /* settings@3x.png */; };
+		FD943EEC1BE8A87100EC6F89 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8121541A1B5A5EC30009D359 /* Info.plist */; };
 		FDC227B01B7875A40031A92B /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227AF1B7875A40031A92B /* DropboxSDK.framework */; };
 		FDC227B21B7875BF0031A92B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227B11B7875BE0031A92B /* Security.framework */; };
 		FDC227B41B7875C70031A92B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDC227B31B7875C70031A92B /* QuartzCore.framework */; };
+		FDDAA21C1BE20A1800C1AE90 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDAA2191BE20A1800C1AE90 /* IAPHelper.m */; };
+		FDDAA21D1BE20A1800C1AE90 /* RageIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FDDAA21B1BE20A1800C1AE90 /* RageIAPHelper.m */; };
+		FDDAA21F1BE20C8D00C1AE90 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDDAA21E1BE20C8D00C1AE90 /* StoreKit.framework */; };
 		FDE744F21B7485D6004D229E /* Pass_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F11B7485D6004D229E /* Pass_check@2x.png */; };
 		FDE744F41B7485DB004D229E /* Pass_Uncheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */; };
 /* End PBXBuildFile section */
@@ -127,11 +134,15 @@
 		812154331B5B09790009D359 /* recBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recBtn.png; sourceTree = "<group>"; };
 		812154351B5B0D9F0009D359 /* recordingBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recordingBtn.png; sourceTree = "<group>"; };
 		812154361B5B0D9F0009D359 /* recStartBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recStartBtn.png; sourceTree = "<group>"; };
-		812154371B5B0D9F0009D359 /* recStopBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recStopBtn.png; sourceTree = "<group>"; };
 		8121543B1B5B11770009D359 /* pauseBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseBtn.png; sourceTree = "<group>"; };
 		8121543D1B5B45F20009D359 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8121543F1B5B45FA0009D359 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		812154411B5B45FF0009D359 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8B3C0F381BF9EBA8002D1F97 /* home-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-icon@2x.png"; sourceTree = "<group>"; };
+		8B3C0F3C1BF9FD42002D1F97 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
+		8B3C0F3E1BF9FDE2002D1F97 /* settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@3x.png"; sourceTree = "<group>"; };
+		8B3C0F461BFA0A0F002D1F97 /* TabBarBg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabBarBg2@2x.png"; sourceTree = "<group>"; };
+		8BD1D66C1BFB1A050083FF26 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FD4F177C1BD757B300FC8AF9 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		FD4F177D1BD757B300FC8AF9 /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		FD4F17811BD760EE00FC8AF9 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
@@ -207,10 +218,14 @@
 		FD4F18101BD7755800FC8AF9 /* info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@3x.png"; sourceTree = "<group>"; };
 		FD7BD3441B7C82E100E951B1 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		FD7BD3451B7C82E100E951B1 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
-		FD7BD3471B7C894F00E951B1 /* settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@3x.png"; sourceTree = "<group>"; };
 		FDC227AF1B7875A40031A92B /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		FDC227B11B7875BE0031A92B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FDC227B31B7875C70031A92B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FDDAA2181BE20A1800C1AE90 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
+		FDDAA2191BE20A1800C1AE90 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		FDDAA21A1BE20A1800C1AE90 /* RageIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RageIAPHelper.h; sourceTree = "<group>"; };
+		FDDAA21B1BE20A1800C1AE90 /* RageIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RageIAPHelper.m; sourceTree = "<group>"; };
+		FDDAA21E1BE20C8D00C1AE90 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FDE744F11B7485D6004D229E /* Pass_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pass_check@2x.png"; sourceTree = "<group>"; };
 		FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pass_Uncheck@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -220,6 +235,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD1D66D1BFB1A060083FF26 /* SystemConfiguration.framework in Frameworks */,
+				FDDAA21F1BE20C8D00C1AE90 /* StoreKit.framework in Frameworks */,
 				FDC227B41B7875C70031A92B /* QuartzCore.framework in Frameworks */,
 				FDC227B21B7875BF0031A92B /* Security.framework in Frameworks */,
 				FDC227B01B7875A40031A92B /* DropboxSDK.framework in Frameworks */,
@@ -235,6 +252,8 @@
 		812153F31B5A5EC30009D359 = {
 			isa = PBXGroup;
 			children = (
+				8BD1D66C1BFB1A050083FF26 /* SystemConfiguration.framework */,
+				FDDAA21E1BE20C8D00C1AE90 /* StoreKit.framework */,
 				FDC227B31B7875C70031A92B /* QuartzCore.framework */,
 				FDC227B11B7875BE0031A92B /* Security.framework */,
 				FDC227AF1B7875A40031A92B /* DropboxSDK.framework */,
@@ -280,9 +299,12 @@
 		812153FF1B5A5EC30009D359 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8B3C0F461BFA0A0F002D1F97 /* TabBarBg2@2x.png */,
 				FDE744F11B7485D6004D229E /* Pass_check@2x.png */,
 				FDE744F31B7485DB004D229E /* Pass_Uncheck@2x.png */,
-				FD7BD3471B7C894F00E951B1 /* settings@3x.png */,
+				8B3C0F381BF9EBA8002D1F97 /* home-icon@2x.png */,
+				8B3C0F3E1BF9FDE2002D1F97 /* settings@3x.png */,
+				8B3C0F3C1BF9FD42002D1F97 /* settings@2x.png */,
 				812154001B5A5EC30009D359 /* Info.plist */,
 				812154011B5A5EC30009D359 /* main.m */,
 			);
@@ -309,11 +331,11 @@
 		8121542C1B5A82970009D359 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FDDAA2171BE209F200C1AE90 /* InAppClasses */,
 				FD4F177F1BD760EE00FC8AF9 /* WDUS dev images */,
 				8121543B1B5B11770009D359 /* pauseBtn.png */,
 				812154351B5B0D9F0009D359 /* recordingBtn.png */,
 				812154361B5B0D9F0009D359 /* recStartBtn.png */,
-				812154371B5B0D9F0009D359 /* recStopBtn.png */,
 				812154331B5B09790009D359 /* recBtn.png */,
 				812154311B5A836C0009D359 /* recImg.png */,
 				8121542D1B5A82970009D359 /* playBtn.png */,
@@ -440,6 +462,17 @@
 			path = "WDUS dev images";
 			sourceTree = "<group>";
 		};
+		FDDAA2171BE209F200C1AE90 /* InAppClasses */ = {
+			isa = PBXGroup;
+			children = (
+				FDDAA2181BE20A1800C1AE90 /* IAPHelper.h */,
+				FDDAA2191BE20A1800C1AE90 /* IAPHelper.m */,
+				FDDAA21A1BE20A1800C1AE90 /* RageIAPHelper.h */,
+				FDDAA21B1BE20A1800C1AE90 /* RageIAPHelper.m */,
+			);
+			name = InAppClasses;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -471,6 +504,7 @@
 				TargetAttributes = {
 					812153FB1B5A5EC30009D359 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 23PR5VHRQU;
 					};
 				};
 			};
@@ -517,9 +551,10 @@
 				812154381B5B0D9F0009D359 /* recordingBtn.png in Resources */,
 				FD4F17CA1BD760EF00FC8AF9 /* settings.png in Resources */,
 				812154301B5A82970009D359 /* stopBtn.png in Resources */,
+				8B3C0F471BFA0A0F002D1F97 /* TabBarBg2@2x.png in Resources */,
 				FD4F17D41BD760EF00FC8AF9 /* playBtn.png in Resources */,
-				8121543A1B5B0D9F0009D359 /* recStopBtn.png in Resources */,
 				FD4F17DE1BD760EF00FC8AF9 /* WDUS-capture-91@3x.png in Resources */,
+				8B3C0F3F1BF9FDE2002D1F97 /* settings@3x.png in Resources */,
 				FD4F17ED1BD760EF00FC8AF9 /* WDUS-stop@2x.png in Resources */,
 				FD4F17F61BD760EF00FC8AF9 /* WDUS-stop.psd in Resources */,
 				FD4F17D51BD760EF00FC8AF9 /* recBtn.png in Resources */,
@@ -550,7 +585,6 @@
 				FD4F17D71BD760EF00FC8AF9 /* recordingBtn.png in Resources */,
 				FDE744F21B7485D6004D229E /* Pass_check@2x.png in Resources */,
 				FD4F17C21BD760EF00FC8AF9 /* Icon-60@2x.png in Resources */,
-				FD7BD3481B7C894F00E951B1 /* settings@3x.png in Resources */,
 				FD4F17C01BD760EF00FC8AF9 /* Icon-40@2x.png in Resources */,
 				FD4F18121BD7755800FC8AF9 /* info@3x.png in Resources */,
 				FD4F17F11BD760EF00FC8AF9 /* WDUS-capture.psd in Resources */,
@@ -564,6 +598,7 @@
 				FD4F17E81BD760EF00FC8AF9 /* WDUS-start-91@3x.png in Resources */,
 				812154291B5A81300009D359 /* CustomTableViewCell.xib in Resources */,
 				8121540D1B5A5EC30009D359 /* Images.xcassets in Resources */,
+				8B3C0F391BF9EBA8002D1F97 /* home-icon@2x.png in Resources */,
 				FD4F17C71BD760EF00FC8AF9 /* info.html in Resources */,
 				812154321B5A836C0009D359 /* recImg.png in Resources */,
 				FD4F180D1BD76FDA00FC8AF9 /* WDUS-capture@2x.png in Resources */,
@@ -573,9 +608,11 @@
 				FD4F17DF1BD760EF00FC8AF9 /* WDUS-capture@2x.png in Resources */,
 				FD4F17EC1BD760EF00FC8AF9 /* WDUS-stop-91@3x.png in Resources */,
 				FD4F18021BD76A3100FC8AF9 /* WDUS-play@3x.png in Resources */,
+				8B3C0F3D1BF9FD42002D1F97 /* settings@2x.png in Resources */,
 				FD4F17F21BD760EF00FC8AF9 /* WDUS-pause.psd in Resources */,
 				FD4F17DC1BD760EF00FC8AF9 /* splash-iphone6plus-ntx.psd in Resources */,
 				FD4F17E51BD760EF00FC8AF9 /* WDUS-settings@2x.png in Resources */,
+				FD943EEC1BE8A87100EC6F89 /* Info.plist in Resources */,
 				FD4F17DB1BD760EF00FC8AF9 /* stopBtn.png in Resources */,
 				FD4F17E11BD760EF00FC8AF9 /* WDUS-pause@2x.png in Resources */,
 				FD4F17C51BD760EF00FC8AF9 /* Icon-Small@3x.png in Resources */,
@@ -595,9 +632,11 @@
 				812154081B5A5EC30009D359 /* ViewController.m in Sources */,
 				812154051B5A5EC30009D359 /* AppDelegate.m in Sources */,
 				FD4F177E1BD757B300FC8AF9 /* InfoViewController.m in Sources */,
+				FDDAA21D1BE20A1800C1AE90 /* RageIAPHelper.m in Sources */,
 				812154281B5A81300009D359 /* CustomTableViewCell.m in Sources */,
 				812154021B5A5EC30009D359 /* main.m in Sources */,
 				FD7BD3461B7C82E100E951B1 /* SettingViewController.m in Sources */,
+				FDDAA21C1BE20A1800C1AE90 /* IAPHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,8 +671,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Amit Gupta (88M58RV78E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amit Gupta (88M58RV78E)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -655,7 +694,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4861d44c-18b9-433e-893a-2bd148cb9608";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -677,8 +716,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Amit Gupta (88M58RV78E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amit Gupta (88M58RV78E)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -693,7 +732,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4861d44c-18b9-433e-893a-2bd148cb9608";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -704,16 +743,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Amit Gupta (88M58RV78E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amit Gupta (88M58RV78E)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = WhatDidUSay/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4861d44c-18b9-433e-893a-2bd148cb9608";
 			};
 			name = Debug;
 		};
@@ -722,16 +762,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Amit Gupta (88M58RV78E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amit Gupta (88M58RV78E)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = WhatDidUSay/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4861d44c-18b9-433e-893a-2bd148cb9608";
 			};
 			name = Release;
 		};
