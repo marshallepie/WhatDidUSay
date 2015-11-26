@@ -18,6 +18,7 @@
     IBOutlet UIButton *whatSayBtn;
     IBOutlet UIButton *startBtn;
     IBOutlet UIButton *stopBtn;
+    __weak IBOutlet UIButton *btnRestore;
     IBOutlet UIActivityIndicatorView *actView;
     IBOutlet UILabel *stateLbl;
     UILongPressGestureRecognizer *longGesture;

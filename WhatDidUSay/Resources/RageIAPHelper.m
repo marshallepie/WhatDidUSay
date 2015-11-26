@@ -14,7 +14,7 @@
     static dispatch_once_t once;
     static RageIAPHelper * sharedInstance;
     dispatch_once(&once, ^{
-        NSSet * productIdentifiers = [NSSet setWithObjects: @"com.marshallepie.WhatDIdUSay.WDUS.Recordings", nil];
+        NSSet * productIdentifiers = [NSSet setWithObjects: @"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets", nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });
     return sharedInstance;

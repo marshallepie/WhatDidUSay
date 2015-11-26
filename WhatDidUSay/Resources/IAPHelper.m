@@ -26,9 +26,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 }
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers {
-    
     if ((self = [super init])) {
-        
         // Store product identifiers
         _productIdentifiers = productIdentifiers;
         
@@ -49,12 +47,9 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         
     }
     return self;
-    
 }
 
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler {
-    
-    
     // 1
     _completionHandler = [completionHandler copy];
     
@@ -70,18 +65,15 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 }
 
 - (void)buyProduct:(SKProduct *)product {
-    
     NSLog(@"Buying %@...", product.productIdentifier);
     
     SKPayment * payment = [SKPayment paymentWithProduct:product];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
-    
 }
 
 #pragma mark - SKProductsRequestDelegate
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
-    
     NSLog(@"Loaded list of products...");
     _productsRequest = nil;
     
@@ -95,23 +87,21 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
     _completionHandler(YES, skProducts);
     _completionHandler = nil;
-    
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
-    
-    NSLog(@"Failed to load list of products.");
+    //NSLog(@"Failed to load list of products. %@",[error localizedFailureReason]);
+    NSLog(@"Failed to load list of products. %@",[error localizedDescription]);
+    //NSLog(@"Failed to load list of products. %@",[error localizedRecoverySuggestion]);
     _productsRequest = nil;
     
     _completionHandler(NO, nil);
     _completionHandler = nil;
-    
 }
 
 #pragma mark SKPaymentTransactionOBserver
 
-- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
-{
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     for (SKPaymentTransaction * transaction in transactions) {
         switch (transaction.transactionState)
         {

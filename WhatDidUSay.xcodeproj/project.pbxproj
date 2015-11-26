@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B037DDA1C06E62D00C2C30C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B037DD91C06E62D00C2C30C /* CoreGraphics.framework */; };
 		812154021B5A5EC30009D359 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 812154011B5A5EC30009D359 /* main.m */; };
 		812154051B5A5EC30009D359 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 812154041B5A5EC30009D359 /* AppDelegate.m */; };
 		812154081B5A5EC30009D359 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 812154071B5A5EC30009D359 /* ViewController.m */; };
@@ -58,7 +59,6 @@
 		FD4F17D91BD760EF00FC8AF9 /* recStopBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F179C1BD760EF00FC8AF9 /* recStopBtn.png */; };
 		FD4F17DA1BD760EF00FC8AF9 /* settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F179D1BD760EF00FC8AF9 /* settings@3x.png */; };
 		FD4F17DB1BD760EF00FC8AF9 /* stopBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F179E1BD760EF00FC8AF9 /* stopBtn.png */; };
-		FD4F17DC1BD760EF00FC8AF9 /* splash-iphone6plus-ntx.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17A01BD760EF00FC8AF9 /* splash-iphone6plus-ntx.psd */; };
 		FD4F17DD1BD760EF00FC8AF9 /* WDUS-capture-70@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17A21BD760EF00FC8AF9 /* WDUS-capture-70@2x.png */; };
 		FD4F17DE1BD760EF00FC8AF9 /* WDUS-capture-91@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17A31BD760EF00FC8AF9 /* WDUS-capture-91@3x.png */; };
 		FD4F17DF1BD760EF00FC8AF9 /* WDUS-capture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17A41BD760EF00FC8AF9 /* WDUS-capture@2x.png */; };
@@ -77,18 +77,6 @@
 		FD4F17EC1BD760EF00FC8AF9 /* WDUS-stop-91@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B11BD760EF00FC8AF9 /* WDUS-stop-91@3x.png */; };
 		FD4F17ED1BD760EF00FC8AF9 /* WDUS-stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B21BD760EF00FC8AF9 /* WDUS-stop@2x.png */; };
 		FD4F17EE1BD760EF00FC8AF9 /* WDUS-stop@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B31BD760EF00FC8AF9 /* WDUS-stop@3x.png */; };
-		FD4F17EF1BD760EF00FC8AF9 /* WDUS logo-new.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B41BD760EF00FC8AF9 /* WDUS logo-new.psd */; };
-		FD4F17F01BD760EF00FC8AF9 /* WDUS-appicon.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B51BD760EF00FC8AF9 /* WDUS-appicon.psd */; };
-		FD4F17F11BD760EF00FC8AF9 /* WDUS-capture.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B61BD760EF00FC8AF9 /* WDUS-capture.psd */; };
-		FD4F17F21BD760EF00FC8AF9 /* WDUS-pause.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B71BD760EF00FC8AF9 /* WDUS-pause.psd */; };
-		FD4F17F31BD760EF00FC8AF9 /* WDUS-play.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B81BD760EF00FC8AF9 /* WDUS-play.psd */; };
-		FD4F17F41BD760EF00FC8AF9 /* WDUS-settings.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17B91BD760EF00FC8AF9 /* WDUS-settings.psd */; };
-		FD4F17F51BD760EF00FC8AF9 /* WDUS-start.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17BA1BD760EF00FC8AF9 /* WDUS-start.psd */; };
-		FD4F17F61BD760EF00FC8AF9 /* WDUS-stop.psd in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17BB1BD760EF00FC8AF9 /* WDUS-stop.psd */; };
-		FD4F17F71BD760EF00FC8AF9 /* WDUS dev images.zip in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17BC1BD760EF00FC8AF9 /* WDUS dev images.zip */; };
-		FD4F17F81BD760EF00FC8AF9 /* WDUS-mockup-info1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17BD1BD760EF00FC8AF9 /* WDUS-mockup-info1.jpg */; };
-		FD4F17F91BD760EF00FC8AF9 /* WDUS-mockup-info2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17BE1BD760EF00FC8AF9 /* WDUS-mockup-info2.jpg */; };
-		FD4F17FA1BD760EF00FC8AF9 /* WDUS-mockup1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17BF1BD760EF00FC8AF9 /* WDUS-mockup1.jpg */; };
 		FD4F17FF1BD76A3100FC8AF9 /* WDUS-pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17FB1BD76A3000FC8AF9 /* WDUS-pause@2x.png */; };
 		FD4F18001BD76A3100FC8AF9 /* WDUS-pause@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17FC1BD76A3100FC8AF9 /* WDUS-pause@3x.png */; };
 		FD4F18011BD76A3100FC8AF9 /* WDUS-play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD4F17FD1BD76A3100FC8AF9 /* WDUS-play@2x.png */; };
@@ -114,6 +102,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B037DD91C06E62D00C2C30C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		812153FC1B5A5EC30009D359 /* WhatDidUSay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatDidUSay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		812154001B5A5EC30009D359 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		812154011B5A5EC30009D359 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -173,7 +162,6 @@
 		FD4F179C1BD760EF00FC8AF9 /* recStopBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recStopBtn.png; sourceTree = "<group>"; };
 		FD4F179D1BD760EF00FC8AF9 /* settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@3x.png"; sourceTree = "<group>"; };
 		FD4F179E1BD760EF00FC8AF9 /* stopBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopBtn.png; sourceTree = "<group>"; };
-		FD4F17A01BD760EF00FC8AF9 /* splash-iphone6plus-ntx.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "splash-iphone6plus-ntx.psd"; sourceTree = "<group>"; };
 		FD4F17A21BD760EF00FC8AF9 /* WDUS-capture-70@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-capture-70@2x.png"; sourceTree = "<group>"; };
 		FD4F17A31BD760EF00FC8AF9 /* WDUS-capture-91@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-capture-91@3x.png"; sourceTree = "<group>"; };
 		FD4F17A41BD760EF00FC8AF9 /* WDUS-capture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-capture@2x.png"; sourceTree = "<group>"; };
@@ -192,18 +180,6 @@
 		FD4F17B11BD760EF00FC8AF9 /* WDUS-stop-91@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-stop-91@3x.png"; sourceTree = "<group>"; };
 		FD4F17B21BD760EF00FC8AF9 /* WDUS-stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-stop@2x.png"; sourceTree = "<group>"; };
 		FD4F17B31BD760EF00FC8AF9 /* WDUS-stop@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-stop@3x.png"; sourceTree = "<group>"; };
-		FD4F17B41BD760EF00FC8AF9 /* WDUS logo-new.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WDUS logo-new.psd"; sourceTree = "<group>"; };
-		FD4F17B51BD760EF00FC8AF9 /* WDUS-appicon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WDUS-appicon.psd"; sourceTree = "<group>"; };
-		FD4F17B61BD760EF00FC8AF9 /* WDUS-capture.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WDUS-capture.psd"; sourceTree = "<group>"; };
-		FD4F17B71BD760EF00FC8AF9 /* WDUS-pause.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WDUS-pause.psd"; sourceTree = "<group>"; };
-		FD4F17B81BD760EF00FC8AF9 /* WDUS-play.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WDUS-play.psd"; sourceTree = "<group>"; };
-		FD4F17B91BD760EF00FC8AF9 /* WDUS-settings.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WDUS-settings.psd"; sourceTree = "<group>"; };
-		FD4F17BA1BD760EF00FC8AF9 /* WDUS-start.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WDUS-start.psd"; sourceTree = "<group>"; };
-		FD4F17BB1BD760EF00FC8AF9 /* WDUS-stop.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WDUS-stop.psd"; sourceTree = "<group>"; };
-		FD4F17BC1BD760EF00FC8AF9 /* WDUS dev images.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "WDUS dev images.zip"; sourceTree = "<group>"; };
-		FD4F17BD1BD760EF00FC8AF9 /* WDUS-mockup-info1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "WDUS-mockup-info1.jpg"; sourceTree = "<group>"; };
-		FD4F17BE1BD760EF00FC8AF9 /* WDUS-mockup-info2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "WDUS-mockup-info2.jpg"; sourceTree = "<group>"; };
-		FD4F17BF1BD760EF00FC8AF9 /* WDUS-mockup1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "WDUS-mockup1.jpg"; sourceTree = "<group>"; };
 		FD4F17FB1BD76A3000FC8AF9 /* WDUS-pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-pause@2x.png"; sourceTree = "<group>"; };
 		FD4F17FC1BD76A3100FC8AF9 /* WDUS-pause@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-pause@3x.png"; sourceTree = "<group>"; };
 		FD4F17FD1BD76A3100FC8AF9 /* WDUS-play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WDUS-play@2x.png"; sourceTree = "<group>"; };
@@ -235,6 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B037DDA1C06E62D00C2C30C /* CoreGraphics.framework in Frameworks */,
 				8BD1D66D1BFB1A060083FF26 /* SystemConfiguration.framework in Frameworks */,
 				FDDAA21F1BE20C8D00C1AE90 /* StoreKit.framework in Frameworks */,
 				FDC227B41B7875C70031A92B /* QuartzCore.framework in Frameworks */,
@@ -252,6 +229,7 @@
 		812153F31B5A5EC30009D359 = {
 			isa = PBXGroup;
 			children = (
+				0B037DD91C06E62D00C2C30C /* CoreGraphics.framework */,
 				8BD1D66C1BFB1A050083FF26 /* SystemConfiguration.framework */,
 				FDDAA21E1BE20C8D00C1AE90 /* StoreKit.framework */,
 				FDC227B31B7875C70031A92B /* QuartzCore.framework */,
@@ -374,10 +352,6 @@
 				FD4F179D1BD760EF00FC8AF9 /* settings@3x.png */,
 				FD4F179E1BD760EF00FC8AF9 /* stopBtn.png */,
 				FD4F179F1BD760EF00FC8AF9 /* WDUS dev images */,
-				FD4F17BC1BD760EF00FC8AF9 /* WDUS dev images.zip */,
-				FD4F17BD1BD760EF00FC8AF9 /* WDUS-mockup-info1.jpg */,
-				FD4F17BE1BD760EF00FC8AF9 /* WDUS-mockup-info2.jpg */,
-				FD4F17BF1BD760EF00FC8AF9 /* WDUS-mockup1.jpg */,
 			);
 			path = "WDUS dev images";
 			sourceTree = "<group>";
@@ -423,16 +397,7 @@
 		FD4F179F1BD760EF00FC8AF9 /* WDUS dev images */ = {
 			isa = PBXGroup;
 			children = (
-				FD4F17A01BD760EF00FC8AF9 /* splash-iphone6plus-ntx.psd */,
 				FD4F17A11BD760EF00FC8AF9 /* WDUS dev images */,
-				FD4F17B41BD760EF00FC8AF9 /* WDUS logo-new.psd */,
-				FD4F17B51BD760EF00FC8AF9 /* WDUS-appicon.psd */,
-				FD4F17B61BD760EF00FC8AF9 /* WDUS-capture.psd */,
-				FD4F17B71BD760EF00FC8AF9 /* WDUS-pause.psd */,
-				FD4F17B81BD760EF00FC8AF9 /* WDUS-play.psd */,
-				FD4F17B91BD760EF00FC8AF9 /* WDUS-settings.psd */,
-				FD4F17BA1BD760EF00FC8AF9 /* WDUS-start.psd */,
-				FD4F17BB1BD760EF00FC8AF9 /* WDUS-stop.psd */,
 			);
 			path = "WDUS dev images";
 			sourceTree = "<group>";
@@ -504,7 +469,7 @@
 				TargetAttributes = {
 					812153FB1B5A5EC30009D359 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 23PR5VHRQU;
+						DevelopmentTeam = B922DN87A3;
 					};
 				};
 			};
@@ -537,14 +502,11 @@
 				FD4F180E1BD76FDA00FC8AF9 /* WDUS-capture@3x.png in Resources */,
 				FD4F17D11BD760EF00FC8AF9 /* Pass_check@2x.png in Resources */,
 				FD4F18081BD76F3300FC8AF9 /* WDUS-start@3x.png in Resources */,
-				FD4F17FA1BD760EF00FC8AF9 /* WDUS-mockup1.jpg in Resources */,
 				FD4F17EE1BD760EF00FC8AF9 /* WDUS-stop@3x.png in Resources */,
 				FD4F17E71BD760EF00FC8AF9 /* WDUS-start-70@2x.png in Resources */,
 				FD4F17C41BD760EF00FC8AF9 /* Icon-Small@2x.png in Resources */,
 				FD4F17E21BD760EF00FC8AF9 /* WDUS-pause@3x.png in Resources */,
-				FD4F17F31BD760EF00FC8AF9 /* WDUS-play.psd in Resources */,
 				FD4F18111BD7755800FC8AF9 /* info@2x.png in Resources */,
-				FD4F17F01BD760EF00FC8AF9 /* WDUS-appicon.psd in Resources */,
 				FD4F18001BD76A3100FC8AF9 /* WDUS-pause@3x.png in Resources */,
 				8121540B1B5A5EC30009D359 /* Main.storyboard in Resources */,
 				FD4F17C91BD760EF00FC8AF9 /* record.png in Resources */,
@@ -556,10 +518,8 @@
 				FD4F17DE1BD760EF00FC8AF9 /* WDUS-capture-91@3x.png in Resources */,
 				8B3C0F3F1BF9FDE2002D1F97 /* settings@3x.png in Resources */,
 				FD4F17ED1BD760EF00FC8AF9 /* WDUS-stop@2x.png in Resources */,
-				FD4F17F61BD760EF00FC8AF9 /* WDUS-stop.psd in Resources */,
 				FD4F17D51BD760EF00FC8AF9 /* recBtn.png in Resources */,
 				FD4F17CE1BD760EF00FC8AF9 /* iPhone6-Plus-landscape@3x.png in Resources */,
-				FD4F17F51BD760EF00FC8AF9 /* WDUS-start.psd in Resources */,
 				FD4F17C31BD760EF00FC8AF9 /* Icon-60@3x.png in Resources */,
 				FD4F17E41BD760EF00FC8AF9 /* WDUS-play@3x.png in Resources */,
 				FD4F18011BD76A3100FC8AF9 /* WDUS-play@2x.png in Resources */,
@@ -569,16 +529,13 @@
 				FD4F17C11BD760EF00FC8AF9 /* Icon-40@3x.png in Resources */,
 				FD4F17E31BD760EF00FC8AF9 /* WDUS-play@2x.png in Resources */,
 				FD4F17CC1BD760EF00FC8AF9 /* Default-568h@2x.png in Resources */,
-				FD4F17F91BD760EF00FC8AF9 /* WDUS-mockup-info2.jpg in Resources */,
 				FD4F18091BD76F3300FC8AF9 /* WDUS-stop@2x.png in Resources */,
 				FD4F17CD1BD760EF00FC8AF9 /* Default@2x.png in Resources */,
 				FD4F17D31BD760EF00FC8AF9 /* pauseBtn.png in Resources */,
 				FD4F18071BD76F3300FC8AF9 /* WDUS-start@2x.png in Resources */,
 				FD4F17D01BD760EF00FC8AF9 /* iPhone6-portrait@2x.png in Resources */,
-				FD4F17F81BD760EF00FC8AF9 /* WDUS-mockup-info1.jpg in Resources */,
 				FD4F17CF1BD760EF00FC8AF9 /* iPhone6-Plus-portrait@3x.png in Resources */,
 				FD4F17D91BD760EF00FC8AF9 /* recStopBtn.png in Resources */,
-				FD4F17EF1BD760EF00FC8AF9 /* WDUS logo-new.psd in Resources */,
 				FD4F17C81BD760EF00FC8AF9 /* play.png in Resources */,
 				FDE744F41B7485DB004D229E /* Pass_Uncheck@2x.png in Resources */,
 				FD4F17C61BD760EF00FC8AF9 /* century_gothic.ttf in Resources */,
@@ -587,14 +544,12 @@
 				FD4F17C21BD760EF00FC8AF9 /* Icon-60@2x.png in Resources */,
 				FD4F17C01BD760EF00FC8AF9 /* Icon-40@2x.png in Resources */,
 				FD4F18121BD7755800FC8AF9 /* info@3x.png in Resources */,
-				FD4F17F11BD760EF00FC8AF9 /* WDUS-capture.psd in Resources */,
 				FD4F17E91BD760EF00FC8AF9 /* WDUS-start@2x.png in Resources */,
 				FD4F17DD1BD760EF00FC8AF9 /* WDUS-capture-70@2x.png in Resources */,
 				812154341B5B09790009D359 /* recBtn.png in Resources */,
 				FD4F17D81BD760EF00FC8AF9 /* recStartBtn.png in Resources */,
 				FD4F17FF1BD76A3100FC8AF9 /* WDUS-pause@2x.png in Resources */,
 				FD4F17E01BD760EF00FC8AF9 /* WDUS-capture@3x.png in Resources */,
-				FD4F17F41BD760EF00FC8AF9 /* WDUS-settings.psd in Resources */,
 				FD4F17E81BD760EF00FC8AF9 /* WDUS-start-91@3x.png in Resources */,
 				812154291B5A81300009D359 /* CustomTableViewCell.xib in Resources */,
 				8121540D1B5A5EC30009D359 /* Images.xcassets in Resources */,
@@ -604,13 +559,10 @@
 				FD4F180D1BD76FDA00FC8AF9 /* WDUS-capture@2x.png in Resources */,
 				FD4F17CB1BD760EF00FC8AF9 /* stop.png in Resources */,
 				FD4F17EB1BD760EF00FC8AF9 /* WDUS-stop-70@2x.png in Resources */,
-				FD4F17F71BD760EF00FC8AF9 /* WDUS dev images.zip in Resources */,
 				FD4F17DF1BD760EF00FC8AF9 /* WDUS-capture@2x.png in Resources */,
 				FD4F17EC1BD760EF00FC8AF9 /* WDUS-stop-91@3x.png in Resources */,
 				FD4F18021BD76A3100FC8AF9 /* WDUS-play@3x.png in Resources */,
 				8B3C0F3D1BF9FD42002D1F97 /* settings@2x.png in Resources */,
-				FD4F17F21BD760EF00FC8AF9 /* WDUS-pause.psd in Resources */,
-				FD4F17DC1BD760EF00FC8AF9 /* splash-iphone6plus-ntx.psd in Resources */,
 				FD4F17E51BD760EF00FC8AF9 /* WDUS-settings@2x.png in Resources */,
 				FD943EEC1BE8A87100EC6F89 /* Info.plist in Resources */,
 				FD4F17DB1BD760EF00FC8AF9 /* stopBtn.png in Resources */,
@@ -671,8 +623,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Amit Gupta (88M58RV78E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amit Gupta (88M58RV78E)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Marshall Epie (2S5J6983MB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Marshall Epie (2S5J6983MB)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -694,7 +646,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "4861d44c-18b9-433e-893a-2bd148cb9608";
+				PROVISIONING_PROFILE = "cc771e6a-ac72-4722-920b-7c0857ebfcf4";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -716,8 +668,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Amit Gupta (88M58RV78E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amit Gupta (88M58RV78E)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Marshall Epie (2S5J6983MB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Marshall Epie (2S5J6983MB)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -732,7 +684,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "4861d44c-18b9-433e-893a-2bd148cb9608";
+				PROVISIONING_PROFILE = "cc771e6a-ac72-4722-920b-7c0857ebfcf4";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -743,8 +695,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Amit Gupta (88M58RV78E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amit Gupta (88M58RV78E)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Marshall Epie (2S5J6983MB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Marshall Epie (2S5J6983MB)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -753,7 +706,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4861d44c-18b9-433e-893a-2bd148cb9608";
+				PROVISIONING_PROFILE = "cc771e6a-ac72-4722-920b-7c0857ebfcf4";
 			};
 			name = Debug;
 		};
@@ -762,8 +715,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Amit Gupta (88M58RV78E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amit Gupta (88M58RV78E)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Marshall Epie (2S5J6983MB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Marshall Epie (2S5J6983MB)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -772,7 +726,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4861d44c-18b9-433e-893a-2bd148cb9608";
+				PROVISIONING_PROFILE = "cc771e6a-ac72-4722-920b-7c0857ebfcf4";
 			};
 			name = Release;
 		};

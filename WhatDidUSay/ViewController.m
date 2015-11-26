@@ -18,7 +18,6 @@
 #import <StoreKit/StoreKit.h>
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate, DBRestClientDelegate> {
-    
     NSArray *_products;
     NSNumberFormatter * _priceFormatter;
     
@@ -35,6 +34,7 @@
     IBOutlet UIButton *settingButton;
     NSMutableDictionary *boolArray;
     NSString *newName;
+    UIRefreshControl *refreshControl;
 }
 
 @property (nonatomic, strong) DBRestClient* restClient;
@@ -52,6 +52,16 @@ const char MyConstantKey;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"]) {
+        btnRestore.hidden = YES;
+        settingButton.hidden = YES;
+    }
+    
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
+    [recordTableView addSubview:refreshControl];
+    [refreshControl beginRefreshing];
     
     count = 0;
     
@@ -217,8 +227,9 @@ const char MyConstantKey;
 }
 
 - (IBAction)infoButtonAction:(id)sender {
-    InfoViewController *infoViewController = [self.storyboard  instantiateViewControllerWithIdentifier:@"InfoViewController"];
-    [self.navigationController pushViewController:infoViewController animated:YES];
+    [[RageIAPHelper sharedInstance] restoreCompletedTransactions];
+    //InfoViewController *infoViewController = [self.storyboard  instantiateViewControllerWithIdentifier:@"InfoViewController"];
+    //[self.navigationController pushViewController:infoViewController animated:YES];
 }
 
 //File upload to dropBox
@@ -265,10 +276,13 @@ const char MyConstantKey;
 }
 
 - (void)productPurchased:(NSNotification *)notification {
-    
     NSString * productIdentifier = notification.object;
     [_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
         if ([product.productIdentifier isEqualToString:productIdentifier]) {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"]) {
+                btnRestore.hidden = YES;
+                settingButton.hidden = YES;
+            }
             //[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
             *stop = YES;
         }
@@ -276,10 +290,27 @@ const char MyConstantKey;
 }
 
 - (void)buyButtonTapped:(id)sender {
-    UIButton *buyButton = (UIButton *)sender;
-    SKProduct *product = _products[buyButton.tag];
-    NSLog(@"Buying %@...", product.productIdentifier);
-    [[RageIAPHelper sharedInstance] buyProduct:product];
+    //UIButton *buyButton = (UIButton *)sender;
+    if (_products.count !=0) {
+        SKProduct *product = _products[0];
+        NSLog(@"Buying %@...", product.productIdentifier);
+        [[RageIAPHelper sharedInstance] buyProduct:product];
+    } else {
+        [self reload];
+        [[[UIAlertView alloc]initWithTitle:@"" message:@"Unable to load product from app store, please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+}
+
+- (void)reload {
+    _products = nil;
+    //[self.tableView reloadData];
+    [[RageIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success) {
+            _products = products;
+            //[self.tableView reloadData];
+        }
+        [refreshControl endRefreshing];
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -287,12 +318,13 @@ const char MyConstantKey;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    [self reload];
     self.navigationController.navigationBarHidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
     //Loading the stored files into array.
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"StoredFiles"]) {
         arrFiles = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"StoredFiles"]];
-        
+        //arrFiles = [[[arrFiles reverseObjectEnumerator] allObjects] mutableCopy];
         //NSLog(@"Files %@", arrFiles);
         if (arrFiles.count == 0) {
             recordTableView.hidden = YES;
@@ -312,17 +344,20 @@ const char MyConstantKey;
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"DateArray"]){
         dateArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"DateArray"]];
-        NSLog(@"DateArray %@", dateArray);
+        //dateArray = [[[dateArray reverseObjectEnumerator] allObjects] mutableCopy];
+        //NSLog(@"DateArray %@", dateArray);
     }
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"TimeArray"]){
         timeArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"TimeArray"]];
-        NSLog(@"DateArray %@", timeArray);
+        //timeArray = [[[timeArray reverseObjectEnumerator] allObjects] mutableCopy];
+        //NSLog(@"DateArray %@", timeArray);
     }
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"FileNameArray"]){
         fileNameArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"FileNameArray"]];
-        NSLog(@"DateArray %@", fileNameArray);
+        //fileNameArray = [[[fileNameArray reverseObjectEnumerator] allObjects] mutableCopy];
+        //NSLog(@"DateArray %@", fileNameArray);
     }
 }
 
@@ -355,7 +390,7 @@ const char MyConstantKey;
     BOOL isPlay;
     isPlay = FALSE;
     
-    NSLog(@"Playing %@", playingStateArray);
+    //NSLog(@"Playing %@", playingStateArray);
     if(arrFiles.count > 0){
         for (int i = 0; i < indexPath.row; i++) {
             if ([[playingStateArray objectAtIndex:i] isEqualToString:@"Yes"]) {
@@ -423,11 +458,11 @@ const char MyConstantKey;
     static NSString *simpleTableIdentifier = @"customCell";
     
     CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-    if([[fileNameArray objectAtIndex:indexPath.row] isEqualToString:@"Snippet"]){
+    if([[fileNameArray objectAtIndex:indexPath.row] isEqualToString:@"Snippet"]) {
         //test
         int a=0;
         BOOL isSaved;
-        do{
+        do {
             isSaved=[self saveFile:[fileNameArray objectAtIndex:indexPath.row] value:a index:(int)indexPath.row];
             a=a+1; 
         } while (!isSaved);
@@ -471,7 +506,7 @@ const char MyConstantKey;
         finalPath = [NSString stringWithFormat:@"%@", name];
     }
     
-    NSLog(@"%@",fileNameArray);
+    //NSLog(@"%@",fileNameArray);
     if([fileNameArray containsObject:finalPath]) {
         newName=finalPath;
         [fileNameArray replaceObjectAtIndex:intValue withObject:newName];
@@ -543,10 +578,8 @@ const char MyConstantKey;
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
     NSNumber *indexPath = objc_getAssociatedObject(alertView, &MyConstantKey);
-
-    if(alertView.tag==1){
+    if(alertView.tag==1) {
         if(buttonIndex==1){
             UITextField *field = [alertView textFieldAtIndex:0];
             [field resignFirstResponder];
@@ -568,32 +601,77 @@ const char MyConstantKey;
                 [alert show];
             }
         }
+    } else if (alertView.tag==123) {
+        if(buttonIndex==1){
+            NSLog(@"buttonIndex == 1");
+            [self buyButtonTapped:nil];
+            
+        } else {
+            NSLog(@"buttonIndex == 0");
+        }
     }
 }
 
 - (IBAction)startBtnClicked:(id)sender {
-    recordLbl.text = @"Monitoring";
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"]) {
+        recordLbl.text = @"Monitoring";
+        //Start button method. Hiding animations.
+        actView.hidden = TRUE;
+        [actView stopAnimating];
+        
+        startBtn.enabled = FALSE;
+        stopBtn.enabled = TRUE;
+        whatSayBtn.enabled = TRUE;
+        
+        //Taking current date and time.
+        int timestamp = [[NSDate date] timeIntervalSince1970];
+        dateString = [NSString stringWithFormat:@"%d", timestamp];
+        
+        [self startRecording];
+    } else {
+        if (arrFiles.count==3) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"You can not record more then three snippets. Do you want to record more?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+            alert.tag = 123;
+            [alert show];
+        } else {
+            recordLbl.text = @"Monitoring";
+            
+            //Start button method. Hiding animations.
+            actView.hidden = TRUE;
+            [actView stopAnimating];
+            
+            startBtn.enabled = FALSE;
+            stopBtn.enabled = TRUE;
+            whatSayBtn.enabled = TRUE;
+            
+            //Taking current date and time.
+            int timestamp = [[NSDate date] timeIntervalSince1970];
+            dateString = [NSString stringWithFormat:@"%d", timestamp];
+            
+            [self startRecording];
+        }
+    }
     
-    //Start button method. Hiding animations.
-    actView.hidden = TRUE;
-    [actView stopAnimating];
-    
-    startBtn.enabled = FALSE;
-    stopBtn.enabled = TRUE;
-    whatSayBtn.enabled = TRUE;
-    
-    //Taking current date and time.
-    int timestamp = [[NSDate date] timeIntervalSince1970];
-    dateString = [NSString stringWithFormat:@"%d", timestamp];
-    
-    [self startRecording];
 }
 
 - (IBAction)recBtnClicked:(id)sender {
-    actView.hidden = FALSE;
-    [actView startAnimating];
-    [recorder stop];
-    [self fnStopRecordingAndSave];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"]) {
+        actView.hidden = FALSE;
+        [actView startAnimating];
+        [recorder stop];
+        [self fnStopRecordingAndSave];
+    } else {
+        if (arrFiles.count==3) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"You can not record more then three snippets. Do you want to record more?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+            alert.tag = 123;
+            [alert show];
+        } else {
+            actView.hidden = FALSE;
+            [actView startAnimating];
+            [recorder stop];
+            [self fnStopRecordingAndSave];
+        }
+    }
 }
 
 // This is the function for Store Recording button which will store the recording and save it in the file.
@@ -608,8 +686,8 @@ const char MyConstantKey;
         [audioPlayer setDelegate:self];
         
         float duration = audioPlayer.duration;
-        NSLog(@"fnStopRecordingAndSave Duration here::: %f", audioPlayer.duration);
-        NSLog(@"SliderValueChanged Duration here::: %d", (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]);
+        //NSLog(@"fnStopRecordingAndSave Duration here::: %f", audioPlayer.duration);
+        //NSLog(@"SliderValueChanged Duration here::: %d", (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]);
         
         if(duration < (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]) {
             recordLbl.text = @"Storing...";
@@ -656,42 +734,50 @@ const char MyConstantKey;
                                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", arrFiles];
                                     BOOL result = [predicate evaluateWithObject:dateString];
                                     
-                                    if(result == FALSE){
-                                        [arrFiles addObject:dateString];
+                                    if(result == FALSE) {
+                                        [arrFiles insertObject:dateString atIndex:0];
+                                        //[arrFiles addObject:dateString];
                                         
                                         NSDate *currentTime = [NSDate date];
                                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                                         [dateFormatter setDateFormat:@"dd/MM/yyyy, hh:mm:ss a"];// here set format which you want...
                                         NSString *date = [dateFormatter stringFromDate:currentTime];
                                         
-                                        [dateArray addObject:date];
+                                        //[dateArray addObject:date];
+                                        [dateArray insertObject:date atIndex:0];
                                         [playingStateArray addObject:@"No"];
                                         [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:i]];
                                         
                                         NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
-                                        [timeArray addObject:timeline];
+                                        //[timeArray addObject:timeline];
+                                        [timeArray insertObject:timeline atIndex:0];
                                         
                                         NSString *str=[NSString stringWithFormat:@"Snippet"];
-                                        [fileNameArray addObject:str];
+                                        //[fileNameArray addObject:str];
+                                        [fileNameArray insertObject:str atIndex:0];
                                     }
                                 }
                             }
                             else {
-                                [arrFiles addObject:dateString];
+                                //[arrFiles addObject:dateString];
+                                [arrFiles insertObject:dateString atIndex:0];
                                 
                                 NSDate *currentTime = [NSDate date];
                                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                                 [dateFormatter setDateFormat:@"dd/MM/yyyy, hh:mm:ss a"];// here set format which you want...
                                 NSString *date = [dateFormatter stringFromDate:currentTime];
                                 
-                                [dateArray addObject:date];
+                                //[dateArray addObject:date];
+                                [dateArray insertObject:date atIndex:0];
                                 [playingStateArray addObject:@"No"];
                                 [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:0]];
                                 NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
-                                [timeArray addObject:timeline];
+                                //[timeArray addObject:timeline];
+                                [timeArray insertObject:timeline atIndex:0];
                                 
                                 NSString *str=[NSString stringWithFormat:@"Snippet"];
-                                [fileNameArray addObject:str];
+                                //[fileNameArray addObject:str];
+                                [fileNameArray insertObject:str atIndex:0];
                             }
                         }
                         
@@ -769,39 +855,46 @@ const char MyConstantKey;
                                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", arrFiles];
                                     BOOL result = [predicate evaluateWithObject:dateString];
                                     if(result == FALSE){
-                                        [arrFiles addObject:dateString];
+                                        //[arrFiles addObject:dateString];
+                                        [arrFiles insertObject:dateString atIndex:0];
                                         
                                         NSDate *currentTime = [NSDate date];
                                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                                         [dateFormatter setDateFormat:@"dd/MM/yyyy, hh:mm:ss a"];// here set format which you want...
                                         NSString *date = [dateFormatter stringFromDate:currentTime];
                                         
-                                        [dateArray addObject:date];
+                                        //[dateArray addObject:date];
+                                        [dateArray insertObject:date atIndex:0];
                                         [playingStateArray addObject:@"No"];
                                         [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:i]];
                                         
                                         //[timeArray addObject:@"10"];//Add slider time here
-                                        [timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
+                                        //[timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
+                                        [timeArray insertObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]] atIndex:0];
                                         NSString *str=[NSString stringWithFormat:@"Snippet"];
-                                        [fileNameArray addObject:str];
+                                        //[fileNameArray addObject:str];
+                                        [fileNameArray insertObject:str atIndex:0];
                                     }
                                 }
                             }
                             else {
-                                [arrFiles addObject:dateString];
-                                
+                                //[arrFiles addObject:dateString];
+                                [arrFiles insertObject:dateString atIndex:0];
                                 NSDate *currentTime = [NSDate date];
                                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                                 [dateFormatter setDateFormat:@"dd/MM/yyyy, hh:mm:ss a"];// here set format which you want...
                                 NSString *date = [dateFormatter stringFromDate:currentTime];
                                 
-                                [dateArray addObject:date];
+                                //[dateArray addObject:date];
+                                [dateArray insertObject:date atIndex:0];
                                 [playingStateArray addObject:@"No"];
                                 [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:0]];
                                 //[timeArray addObject:@"10"];
-                                [timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
+                                //[timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
+                                [timeArray insertObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]] atIndex:0];
                                 NSString *str=[NSString stringWithFormat:@"Snippet"];
-                                [fileNameArray addObject:str];
+                                //[fileNameArray addObject:str];
+                                [fileNameArray insertObject:str atIndex:0];
                             }
                         }
                         
@@ -925,8 +1018,9 @@ const char MyConstantKey;
 }
 
 -(IBAction)settingAction:(id)sender{
-    SettingViewController *setting  = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
-    [self presentViewController:setting animated:YES completion:nil];
+    [self buyButtonTapped:sender];
+    //SettingViewController *setting  = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    //[self presentViewController:setting animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
