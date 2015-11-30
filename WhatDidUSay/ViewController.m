@@ -53,6 +53,7 @@ const char MyConstantKey;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"]) {
         btnRestore.hidden = YES;
         settingButton.hidden = YES;
@@ -297,6 +298,7 @@ const char MyConstantKey;
         [[RageIAPHelper sharedInstance] buyProduct:product];
     } else {
         [self reload];
+        NSLog(@"Unable to load product from app store, please try again later");
         [[[UIAlertView alloc]initWithTitle:@"" message:@"Unable to load product from app store, please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
@@ -603,11 +605,11 @@ const char MyConstantKey;
         }
     } else if (alertView.tag==123) {
         if(buttonIndex==1){
-            NSLog(@"buttonIndex == 1");
+            //NSLog(@"buttonIndex == 1");
             [self buyButtonTapped:nil];
             
         } else {
-            NSLog(@"buttonIndex == 0");
+            //NSLog(@"buttonIndex == 0");
         }
     }
 }
@@ -646,7 +648,9 @@ const char MyConstantKey;
             
             //Taking current date and time.
             int timestamp = [[NSDate date] timeIntervalSince1970];
+            //NSLog(@"startBtnClicked dateString == %@", dateString);
             dateString = [NSString stringWithFormat:@"%d", timestamp];
+            //NSLog(@"startBtnClicked dateString == %@", dateString);
             
             [self startRecording];
         }
@@ -659,6 +663,7 @@ const char MyConstantKey;
         actView.hidden = FALSE;
         [actView startAnimating];
         [recorder stop];
+        //NSLog(@"[recorder stop]");
         [self fnStopRecordingAndSave];
     } else {
         if (arrFiles.count==3) {
@@ -669,6 +674,7 @@ const char MyConstantKey;
             actView.hidden = FALSE;
             [actView startAnimating];
             [recorder stop];
+            //NSLog(@"[recorder stop]");
             [self fnStopRecordingAndSave];
         }
     }
@@ -681,12 +687,14 @@ const char MyConstantKey;
         NSURL *url = [NSURL URLWithString:strURL];
         
         //Calculating the duration of the current recording.
-        audioPlayer =   [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-        audioPlayer.numberOfLoops = 0;
-        [audioPlayer setDelegate:self];
+        AVAudioPlayer *audioPlayer1 =   [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        audioPlayer1.numberOfLoops = 0;
+        [audioPlayer1 setDelegate:self];
+        //NSLog(@"dateString == %@", dateString);
         
-        float duration = audioPlayer.duration;
-        //NSLog(@"fnStopRecordingAndSave Duration here::: %f", audioPlayer.duration);
+        float duration = audioPlayer1.duration;
+        //NSLog(@"duration == %f", duration);
+        //NSLog(@"fnStopRecordingAndSave Duration here::: %f", audioPlayer1.duration);
         //NSLog(@"SliderValueChanged Duration here::: %d", (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]);
         
         if(duration < (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]) {
@@ -696,7 +704,7 @@ const char MyConstantKey;
             AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:audioAsset presetName:AVAssetExportPresetAppleM4A];
             
             Float64 startTimeInSeconds = 0;
-            Float64 durationInSeconds = audioPlayer.duration;
+            Float64 durationInSeconds = audioPlayer1.duration;
             
             CMTime start = CMTimeMakeWithSeconds(startTimeInSeconds, 600);
             CMTime duration1 = CMTimeMakeWithSeconds(durationInSeconds, 600);
@@ -748,7 +756,7 @@ const char MyConstantKey;
                                         [playingStateArray addObject:@"No"];
                                         [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:i]];
                                         
-                                        NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
+                                        NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer1.duration];
                                         //[timeArray addObject:timeline];
                                         [timeArray insertObject:timeline atIndex:0];
                                         
@@ -771,7 +779,7 @@ const char MyConstantKey;
                                 [dateArray insertObject:date atIndex:0];
                                 [playingStateArray addObject:@"No"];
                                 [boolArray setValue:[NSNumber numberWithBool:NO] forKey:[arrFiles objectAtIndex:0]];
-                                NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer.duration];
+                                NSString *timeline = [NSString stringWithFormat:@"0%d", (int)audioPlayer1.duration];
                                 //[timeArray addObject:timeline];
                                 [timeArray insertObject:timeline atIndex:0];
                                 
@@ -813,9 +821,9 @@ const char MyConstantKey;
             AVURLAsset* audioAsset = [[AVURLAsset alloc]initWithURL:[NSURL fileURLWithPath:strURL] options:nil];
             AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:audioAsset presetName:AVAssetExportPresetAppleM4A];
             
-            //Float64 startTimeInSeconds = audioPlayer.duration-10;
+            //Float64 startTimeInSeconds = audioPlayer1.duration-10;
             //Float64 durationInSeconds = 10;
-            Float64 startTimeInSeconds = audioPlayer.duration-(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"];
+            Float64 startTimeInSeconds = audioPlayer1.duration-(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"];
             Float64 durationInSeconds = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"];
             //Reducing the duration by 10 seconds
             CMTime start = CMTimeMakeWithSeconds(startTimeInSeconds, 600);
@@ -930,7 +938,9 @@ const char MyConstantKey;
 
 -(void)fnStartRecordingAgain{
     int timestamp = [[NSDate date] timeIntervalSince1970];
+    //NSLog(@"dateString == %@", dateString);
     dateString = [NSString stringWithFormat:@"%d", timestamp];
+    //NSLog(@"fnStartRecordingAgain dateString == %@", dateString);
     [self startRecording];
 }
 
@@ -944,14 +954,17 @@ const char MyConstantKey;
     [self stopRecording];
 }
 
-- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder1 successfully:(BOOL)flag{
     if (flag) {
         NSLog(@"Successful!");
+        [recorder1 stop];
     }
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     [audioPlayer stop];
+    [player stop];
+    [self startRecording];
     for (int i=0; i<playingStateArray.count; i++) {
         [playingStateArray replaceObjectAtIndex:i withObject:@"No"];
     }
@@ -959,8 +972,7 @@ const char MyConstantKey;
 }
 
 // This is called when user click on Start Recording button or when called from Store Recording button's second process.
-- (void) startRecording
-{
+- (void) startRecording {
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     NSError *err = nil;
     [audioSession setCategory :AVAudioSessionCategoryPlayAndRecord error:&err];
@@ -985,8 +997,11 @@ const char MyConstantKey;
     
     NSURL *url = [NSURL fileURLWithPath:recorderFilePath];
     err = nil;
-    recorder = [[ AVAudioRecorder alloc] initWithURL:url settings:recordSettings error:&err];
+    if (recorder) {
+        recorder = nil;
+    }
     
+    recorder = [[ AVAudioRecorder alloc] initWithURL:url settings:recordSettings error:&err];
     
     if(!recorder){
         NSLog(@"recorder: %@ %@", [err domain], [[err userInfo] description]);
@@ -1010,10 +1025,13 @@ const char MyConstantKey;
         [cantRecordAlert show];
         return;
     }
+    //NSLog(@"startRecording dateString == %@", dateString);
     [recorder record];
+    //NSLog(@"[recorder record]");
 }
 
 - (void) stopRecording {
+    //NSLog(@"[recorder stop]");
     [recorder stop];
 }
 
