@@ -30,6 +30,10 @@
     [DBSession setSharedSession:session];
     [DBRequest setNetworkRequestDelegate:self];
     
+    NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Default"]];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:nil];
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isApplicationLaunchedFirstTime"]) {
         [[NSUserDefaults standardUserDefaults] setInteger:10 forKey:@"SliderValueChanged"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isApplicationLaunchedFirstTime"];
@@ -39,6 +43,7 @@
         [NSArray arrayWithObjects:viewController, nil];
     }
     [window addSubview:navigationController.view];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     //[UITabBar appearance].backgroundImage = [UIImage imageNamed:@"TabBarBg-new.png"];
 
     [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"TabBarBg2.png"]];

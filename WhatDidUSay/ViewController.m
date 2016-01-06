@@ -16,8 +16,11 @@
 #import "InfoViewController.h"
 #import "RageIAPHelper.h"
 #import <StoreKit/StoreKit.h>
+#import "MBProgressHUD.h"
 
-@interface ViewController ()<UITableViewDataSource, UITableViewDelegate, DBRestClientDelegate> {
+
+@interface ViewController ()<UITableViewDataSource, UITableViewDelegate, DBRestClientDelegate, MBProgressHUDDelegate> {
+    MBProgressHUD *HUD;
     NSArray *_products;
     NSNumberFormatter * _priceFormatter;
     
@@ -35,9 +38,20 @@
     NSMutableDictionary *boolArray;
     NSString *newName;
     UIRefreshControl *refreshControl;
+    
+    NSMutableString *storedFiles_Key;
+    NSMutableString *dateArray_Key;
+    NSMutableString *timeArray_Key;
+    NSMutableString *fileNameArray_Key;
+    
+    UILabel *lblStartDuration;
+    UILabel *lblEndDuration;
+    UISlider *endSlider;
+    UISlider *startSlider;
 }
 
 @property (nonatomic, strong) DBRestClient* restClient;
+
 -(IBAction)deleteAction:(id)sender;
 -(IBAction)settingAction:(id)sender;
 
@@ -48,12 +62,35 @@
 @implementation ViewController
 const char MyConstantKey;
 
-@synthesize recordTableView;
+@synthesize recordTableView, folderName, inAppCountArray,audioCountArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"];
+    storedFiles_Key = [NSMutableString string];
+    dateArray_Key = [NSMutableString string];
+    timeArray_Key = [NSMutableString string];
+    fileNameArray_Key = [NSMutableString string];
+    
+    NSLog(@"folderName == %@",folderName);
+    NSString *newFolderName = folderName;
+    if ([folderName containsString:@" "]) {
+        newFolderName = [folderName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    }
+    
+    [storedFiles_Key appendString:[NSString stringWithFormat:@"StoredFiles_%@",newFolderName]];
+    [dateArray_Key appendString:[NSString stringWithFormat:@"DateArray_%@",newFolderName]];
+    [timeArray_Key appendString:[NSString stringWithFormat:@"TimeArray_%@",newFolderName]];
+    [fileNameArray_Key appendString:[NSString stringWithFormat:@"FileNameArray_%@",newFolderName]];
+    
+    
+    
+    //StoredFiles_Key = [NSString stringWithFormat:@"%@",folderName];
+    
+    self.title = @"What Did U Say";
+    UIBarButtonItem *btnBuy = [[UIBarButtonItem alloc]initWithTitle:@"Buy" style:UIBarButtonItemStylePlain target:self action:@selector(buyButtonTapped:)];
+    self.navigationItem.rightBarButtonItem=btnBuy;
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"]) {
         btnRestore.hidden = YES;
         settingButton.hidden = YES;
@@ -61,8 +98,8 @@ const char MyConstantKey;
     
     refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
-    [recordTableView addSubview:refreshControl];
-    [refreshControl beginRefreshing];
+    //[recordTableView addSubview:refreshControl];
+    //[refreshControl beginRefreshing];
     
     count = 0;
     
@@ -81,6 +118,8 @@ const char MyConstantKey;
     stopBtn.enabled = FALSE;
     whatSayBtn.enabled = FALSE;
     
+    inAppCountArray = [[NSMutableArray alloc] init];
+    audioCountArray = [[NSMutableArray alloc] init];
     arrFiles = [[NSMutableArray alloc] init];
     dateArray = [[NSMutableArray alloc] init];
     timeArray = [[NSMutableArray alloc] init];
@@ -89,11 +128,14 @@ const char MyConstantKey;
     
     audioPlayer = [[AVAudioPlayer alloc] init];
     
-    actView.hidden = TRUE;
+    //actView.hidden = TRUE;
     [actView stopAnimating];
     
     UINib *countryNib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
     [self.recordTableView registerNib:countryNib forCellReuseIdentifier:@"customCell"];
+    
+    [self getAudioFromFolder];
+    [self getAllAudioFileCount];
     
     //Long Gesture
     longGesture = [[UILongPressGestureRecognizer alloc]
@@ -115,8 +157,7 @@ const char MyConstantKey;
     else {
         if (gestureRecognizer.state == UIGestureRecognizerStateBegan){
             // getImageforPost=  [[arrTableCount objectAtIndex:indexPath.row]valueForKey:@"Image"];
-            audioFile=[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, [arrFiles objectAtIndex:indexPath.row]];
-            
+            audioFile=[NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER,folderName, [arrFiles objectAtIndex:indexPath.row]];
             UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Export your Recording" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mail",@"Text",@"DropBox", nil];
             actionSheet.tag=1;
             [actionSheet showInView:self.view];
@@ -144,8 +185,6 @@ const char MyConstantKey;
             }
             //NSURL *url = [[NSURL alloc]initFileURLWithPath:audioFile];
             //NSData *soundFile = [[NSData alloc] initWithContentsOfURL:url];
-            
-            
         }
         else if(buttonIndex == 1){
             //MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
@@ -186,6 +225,38 @@ const char MyConstantKey;
         }
     }
 }
+
+- (void)getAudioFromFolder {
+    NSString *documentsDirectory = [NSString stringWithFormat:@"%@/%@", DOCUMENTS_FOLDER,folderName];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSArray *fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+    for (NSString *s in fileList) {
+        if ([s containsString:@".m4a"] && [s containsString:@"Saved_"]) {
+            [audioCountArray addObject:s];
+        }
+    }
+}
+
+- (void)getAllAudioFileCount {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSArray *fileList = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+    [inAppCountArray removeAllObjects];
+    for (NSString *s in fileList) {
+        NSString *documentsDirectory1 = [paths objectAtIndex:0];
+        documentsDirectory1 = [documentsDirectory1 stringByAppendingPathComponent:s];
+        NSArray *fileList1 = [manager contentsOfDirectoryAtPath:documentsDirectory1 error:nil];
+        for (NSString *s in fileList1) {
+            if ([s containsString:@".m4a"] && [s containsString:@"Saved_"]) {
+                [inAppCountArray addObject:s];
+            }
+        }
+    }
+}
+
 - (void)messageMulitpleFiles {
     MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
     if([MFMessageComposeViewController canSendAttachments] &&
@@ -198,7 +269,7 @@ const char MyConstantKey;
             NSString *dic=[arrFiles objectAtIndex:i];
             BOOL checked=[[boolArray objectForKey:dic]boolValue];
             if(checked) {
-                NSURL *url = [[NSURL alloc]initFileURLWithPath:[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, [arrFiles objectAtIndex:i]]];
+                NSURL *url = [[NSURL alloc]initFileURLWithPath:[NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER,folderName, [arrFiles objectAtIndex:i]]];
                 //NSData *soundFile = [[NSData alloc] initWithContentsOfURL:url];
                 [controller addAttachmentURL:url withAlternateFilename:nil];
             }
@@ -216,14 +287,14 @@ const char MyConstantKey;
         NSString *dic=[arrFiles objectAtIndex:i];
         BOOL checked=[[boolArray objectForKey:dic]boolValue];
         if(checked) {
-            NSURL *url = [[NSURL alloc]initFileURLWithPath:[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, [arrFiles objectAtIndex:i]]];
+            NSURL *url = [[NSURL alloc]initFileURLWithPath:[NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER,folderName, [arrFiles objectAtIndex:i]]];
             NSData *soundFile = [[NSData alloc] initWithContentsOfURL:url];
             [controller addAttachmentData:soundFile mimeType:@"audio/mpeg" fileName:@""];
         }
     }
     //[controller addAttachmentData:soundFile mimeType:@"audio/mpeg" fileName:@""];
-    [controller setSubject:@"Demo Audio File"];
-    [controller setMessageBody:@"Dummy Text" isHTML:NO];
+    //[controller setSubject:@"Demo Audio File"];
+    [controller setMessageBody:@"Sent from WhatDidUSay mobile application." isHTML:NO];
     [self presentViewController:controller animated: YES completion:nil];
 }
 
@@ -291,14 +362,19 @@ const char MyConstantKey;
 }
 
 - (void)buyButtonTapped:(id)sender {
-    //UIButton *buyButton = (UIButton *)sender;
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter Folder name" message:@"\n\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
+//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [alert textFieldAtIndex:0].delegate = self;
+//    alert.tag=113;
+//    [alert show];
+    
     if (_products.count !=0) {
         SKProduct *product = _products[0];
         NSLog(@"Buying %@...", product.productIdentifier);
         [[RageIAPHelper sharedInstance] buyProduct:product];
     } else {
         [self reload];
-        NSLog(@"Unable to load product from app store, please try again later");
+        //NSLog(@"Unable to load product from app store, please try again later");
         [[[UIAlertView alloc]initWithTitle:@"" message:@"Unable to load product from app store, please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
@@ -320,12 +396,13 @@ const char MyConstantKey;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    [self reload];
-    self.navigationController.navigationBarHidden = YES;
+    //[self reload];
+    //self.navigationController.navigationBarHidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
     //Loading the stored files into array.
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"StoredFiles"]) {
-        arrFiles = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"StoredFiles"]];
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:storedFiles_Key]) {
+        arrFiles = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:storedFiles_Key]];
         //arrFiles = [[[arrFiles reverseObjectEnumerator] allObjects] mutableCopy];
         //NSLog(@"Files %@", arrFiles);
         if (arrFiles.count == 0) {
@@ -344,23 +421,22 @@ const char MyConstantKey;
         }
     }
     
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"DateArray"]){
-        dateArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"DateArray"]];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:dateArray_Key]){
+        dateArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:dateArray_Key]];
         //dateArray = [[[dateArray reverseObjectEnumerator] allObjects] mutableCopy];
         //NSLog(@"DateArray %@", dateArray);
     }
     
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"TimeArray"]){
-        timeArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"TimeArray"]];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:timeArray_Key]){
+        timeArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:timeArray_Key]];
         //timeArray = [[[timeArray reverseObjectEnumerator] allObjects] mutableCopy];
         //NSLog(@"DateArray %@", timeArray);
     }
     
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"FileNameArray"]){
-        fileNameArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"FileNameArray"]];
-        //fileNameArray = [[[fileNameArray reverseObjectEnumerator] allObjects] mutableCopy];
-        //NSLog(@"DateArray %@", fileNameArray);
+    if([[NSUserDefaults standardUserDefaults] objectForKey:fileNameArray_Key]){
+        fileNameArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:fileNameArray_Key]];
     }
+    [self.view bringSubviewToFront:recordLbl];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -370,12 +446,13 @@ const char MyConstantKey;
             [dateArray removeObjectAtIndex:indexPath.row];
             [timeArray removeObjectAtIndex:indexPath.row];
             
-            [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:@"StoredFiles"];
-            [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:@"DateArray"];
-            [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:@"TimeArray"];
+            [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:storedFiles_Key];
+            [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:dateArray_Key];
+            [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:timeArray_Key];
             
             [[NSUserDefaults standardUserDefaults] synchronize];
-            
+            [self getAllAudioFileCount];
+            [self getAudioFromFolder];
             [recordTableView reloadData];
         }
     }
@@ -420,7 +497,7 @@ const char MyConstantKey;
                 [recordTableView reloadData];
                 
                 [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil]; // To play audio from speaker
-                NSString *strURL = [NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, [arrFiles objectAtIndex:indexPath.row]] ;
+                NSString *strURL = [NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER, folderName, [arrFiles objectAtIndex:indexPath.row]] ;
                 NSURL *url = [NSURL URLWithString:strURL];
                 
                 audioPlayer =  [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
@@ -458,9 +535,11 @@ const char MyConstantKey;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"customCell";
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [HUD hide:YES];
+    });
     CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-    if([[fileNameArray objectAtIndex:indexPath.row] isEqualToString:@"Snippet"]) {
+    if([[fileNameArray objectAtIndex:indexPath.row] isEqualToString:@"AudioNotes"]) {
         //test
         int a=0;
         BOOL isSaved;
@@ -475,14 +554,20 @@ const char MyConstantKey;
     }
     cell.tag=indexPath.row;
     cell.dateLbl.text = [NSString stringWithFormat:@"%@", [dateArray objectAtIndex:indexPath.row]];
-    cell.timeLineLbl.text = [NSString stringWithFormat:@"00:%@", [timeArray objectAtIndex:indexPath.row]];
+    NSString *strTime = [timeArray objectAtIndex:indexPath.row];
+    if ([strTime length]>2 && [strTime hasPrefix:@"0"]) {
+        strTime = [strTime substringFromIndex:1];
+        cell.timeLineLbl.text = [NSString stringWithFormat:@"00:%@", strTime];
+    } else {
+        cell.timeLineLbl.text = [NSString stringWithFormat:@"00:%@", [timeArray objectAtIndex:indexPath.row]];
+    }
     
     if ([[playingStateArray objectAtIndex:indexPath.row] isEqualToString:@"No"]) {
         cell.stateImg.image=[UIImage imageNamed:@"WDUS-play.png"];
-    }
-    else{
+    } else {
         cell.stateImg.image=[UIImage imageNamed:@"WDUS-pause.png"];
     }
+    
     cell.delegate=self;
     
     NSString *value=[arrFiles objectAtIndex:indexPath.row];
@@ -508,17 +593,16 @@ const char MyConstantKey;
         finalPath = [NSString stringWithFormat:@"%@", name];
     }
     
-    //NSLog(@"%@",fileNameArray);
     if([fileNameArray containsObject:finalPath]) {
         newName=finalPath;
         [fileNameArray replaceObjectAtIndex:intValue withObject:newName];
-        [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:@"FileNameArray"];
+        [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:fileNameArray_Key];
         [[NSUserDefaults standardUserDefaults] synchronize];
         return NO;
     } else {
         newName=finalPath;
         [fileNameArray replaceObjectAtIndex:intValue withObject:newName];
-        [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:@"FileNameArray"];
+        [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:fileNameArray_Key];
         [[NSUserDefaults standardUserDefaults] synchronize];
         return YES;
     }
@@ -539,16 +623,22 @@ const char MyConstantKey;
     for (NSIndexPath *selectionIndex in arr1){
         [indicesOfItemsToDelete addIndex:selectionIndex.row];
     }
+    
+    for (NSIndexPath *ind in arr1) {
+        [self deleteFolderNameFromDocumentDirectory:[NSString stringWithFormat:@"%@/%@",folderName, [audioCountArray objectAtIndex:ind.row]]];
+    }
     [arrFiles removeObjectsAtIndexes:indicesOfItemsToDelete];
     [dateArray removeObjectsAtIndexes:indicesOfItemsToDelete];
     [timeArray removeObjectsAtIndexes:indicesOfItemsToDelete];
     [fileNameArray removeObjectsAtIndexes:indicesOfItemsToDelete];
     
     
-    [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:@"StoredFiles"];
-    [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:@"DateArray"];
-    [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:@"TimeArray"];
-    [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:@"FileNameArray"];
+    
+    
+    [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:storedFiles_Key];
+    [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:dateArray_Key];
+    [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:timeArray_Key];
+    [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:fileNameArray_Key];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -557,9 +647,26 @@ const char MyConstantKey;
         NSString *str=[arrFiles objectAtIndex:i];
         [boolArray setValue:[NSNumber numberWithBool:NO] forKey:str];
     }
+    [self getAllAudioFileCount];
+    [self getAudioFromFolder];
     [recordTableView reloadData];
-    
 }
+
+- (BOOL)deleteFolderNameFromDocumentDirectory:(NSString*)folderName1 {
+    //BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER,folderName, dateString]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:folderName1];
+    NSError *error;
+    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+    if (success) {
+        return YES;
+    } else {
+        return NO;
+    }
+    return NO;
+}
+
 -(void)useButton:(id)sender{
     NSString *dic=[arrFiles objectAtIndex:[sender tag]];
     BOOL  checked1 = [[boolArray objectForKey:dic] boolValue];
@@ -567,58 +674,116 @@ const char MyConstantKey;
     [recordTableView reloadData];
 }
 
+- (void)startSliderValueChanged:(id)sender {
+    UISlider *slider = (UISlider*)sender;
+    lblStartDuration.text = [NSString stringWithFormat:@"Start Duration: %d",(int)slider.value];
+}
+
+- (void)endSliderValueChanged:(id)sender {
+    UISlider *slider = (UISlider*)sender;//Get here the slider value and save for recording
+    startSlider.maximumValue = slider.value-1;
+    //startSlider.value = slider.value;
+    if (slider.value<=startSlider.value) {
+        
+    }
+    //lblStartDuration.text = @"Start Duration: 0";
+    lblStartDuration.text = [NSString stringWithFormat:@"Start Duration: %d",(int)startSlider.value];
+    lblEndDuration.text = [NSString stringWithFormat:@"End Duration: %d",(int)slider.value];//Show slider value on label
+}
+
 -(void)useButton_label:(id)sender{
     int ab=(int)[sender tag];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter Filename" message:@"\n\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Enter", nil];
+    //NSLog(@"timeArray == %@",[timeArray objectAtIndex:ab]);
+    /*
+     [fileNameArray replaceObjectAtIndex:[indexPath intValue] withObject:field.text];
+     
+     [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:fileNameArray_Key];
+     [[NSUserDefaults standardUserDefaults] synchronize];
+    */
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter Filename" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Enter", nil];
+    //CGRect frame = CGRectMake(10,21,250, 25);
+    //CGRect endSliderFrame = CGRectMake(10,70,250, 25);
+    UIView *sliderView = [[UIView alloc]initWithFrame:CGRectMake(0,0,200,50)];
+    //sliderView.backgroundColor = [UIColor redColor];
+    [alert setValue:sliderView forKey:@"accessoryView"];
+    
+    lblStartDuration = [[UILabel alloc] initWithFrame:CGRectMake(15,0,200,20)];
+    [sliderView addSubview:lblStartDuration];
+    lblStartDuration.text= @"Start Duration: 0";
+    
+    lblEndDuration = [[UILabel alloc] initWithFrame:CGRectMake(15,25,200,20)];
+    [sliderView addSubview:lblEndDuration];
+    lblEndDuration.text= [NSString stringWithFormat:@"End Duration: %@",[timeArray objectAtIndex:ab]];
+    
+    /*endSlider = [[UISlider alloc]initWithFrame:endSliderFrame];
+    [endSlider addTarget:self action:@selector(endSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    endSlider.minimumValue=1;
+    endSlider.maximumValue = [[timeArray objectAtIndex:ab] floatValue];
+    endSlider.value=[[timeArray objectAtIndex:ab] floatValue];
+    [sliderView addSubview:endSlider];
+    
+    startSlider = [[UISlider alloc]initWithFrame:frame];
+    [startSlider addTarget:self action:@selector(startSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    startSlider.minimumValue = 0;
+    startSlider.maximumValue = endSlider.value-1;
+    [sliderView addSubview:startSlider];*/
+    
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert textFieldAtIndex:0].delegate = self;
     alert.tag=1;
     [alert show];
     
     objc_setAssociatedObject(alert, &MyConstantKey, [NSNumber numberWithInt:ab], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSNumber *indexPath = objc_getAssociatedObject(alertView, &MyConstantKey);
     if(alertView.tag==1) {
-        if(buttonIndex==1){
+        if(buttonIndex==1) {
             UITextField *field = [alertView textFieldAtIndex:0];
             [field resignFirstResponder];
             if([[field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]!=0) {
                 if([fileNameArray containsObject:field.text]){
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message!" message:@"Filename already exist." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alert show];
-                }
-                else{
+                } else {
                     [fileNameArray replaceObjectAtIndex:[indexPath intValue] withObject:field.text];
                     
-                    [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:@"FileNameArray"];
+                    [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:fileNameArray_Key];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     [recordTableView reloadData];
                 }
-            }
-            else{
+            } else {
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Message!" message:@"Enter Filename." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alert show];
             }
         }
     } else if (alertView.tag==123) {
         if(buttonIndex==1){
-            //NSLog(@"buttonIndex == 1");
             [self buyButtonTapped:nil];
-            
         } else {
-            //NSLog(@"buttonIndex == 0");
+            
         }
+    } else  {
+        
     }
+}
+
+
+#pragma mark - MBProgressHUDDelegate
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    // Remove HUD from screen when the HUD was hidded
+    [HUD removeFromSuperview];
+    HUD = nil;
 }
 
 - (IBAction)startBtnClicked:(id)sender {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"]) {
         recordLbl.text = @"Monitoring";
         //Start button method. Hiding animations.
-        actView.hidden = TRUE;
+        //actView.hidden = TRUE;
         [actView stopAnimating];
         
         startBtn.enabled = FALSE;
@@ -631,59 +796,78 @@ const char MyConstantKey;
         
         [self startRecording];
     } else {
-        if (arrFiles.count==3) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"You can not record more then three snippets. Do you want to record more?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+        if (inAppCountArray.count==3) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"You can not record more then three AudioNotes. Do you want to record more?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
             alert.tag = 123;
             [alert show];
         } else {
-            recordLbl.text = @"Monitoring";
-            
-            //Start button method. Hiding animations.
-            actView.hidden = TRUE;
-            [actView stopAnimating];
-            
-            startBtn.enabled = FALSE;
-            stopBtn.enabled = TRUE;
-            whatSayBtn.enabled = TRUE;
-            
-            //Taking current date and time.
-            int timestamp = [[NSDate date] timeIntervalSince1970];
-            //NSLog(@"startBtnClicked dateString == %@", dateString);
-            dateString = [NSString stringWithFormat:@"%d", timestamp];
-            //NSLog(@"startBtnClicked dateString == %@", dateString);
-            
-            [self startRecording];
+            if (inAppCountArray.count<3) {
+                recordLbl.text = @"Monitoring";
+                
+                //Start button method. Hiding animations.
+                //actView.hidden = TRUE;
+                [actView stopAnimating];
+                
+                startBtn.enabled = FALSE;
+                stopBtn.enabled = TRUE;
+                whatSayBtn.enabled = TRUE;
+                
+                //Taking current date and time.
+                int timestamp = [[NSDate date] timeIntervalSince1970];
+                //NSLog(@"startBtnClicked dateString == %@", dateString);
+                dateString = [NSString stringWithFormat:@"%d", timestamp];
+                //NSLog(@"startBtnClicked dateString == %@", dateString);
+                [self startRecording];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"You can not record more then three AudioNotes. Do you want to record more?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+                alert.tag = 123;
+                [alert show];
+            }
         }
     }
-    
 }
 
 - (IBAction)recBtnClicked:(id)sender {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"com.marshallepie.WhatDIdUSay.WDUS.MoreSnippets"]) {
-        actView.hidden = FALSE;
+        //actView.hidden = FALSE;
         [actView startAnimating];
         [recorder stop];
-        //NSLog(@"[recorder stop]");
         [self fnStopRecordingAndSave];
     } else {
-        if (arrFiles.count==3) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"You can not record more then three snippets. Do you want to record more?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+        if (inAppCountArray.count==3) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"You can not record more then three AudioNotes. Do you want to record more?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
             alert.tag = 123;
             [alert show];
         } else {
-            actView.hidden = FALSE;
-            [actView startAnimating];
-            [recorder stop];
-            //NSLog(@"[recorder stop]");
-            [self fnStopRecordingAndSave];
+            if (inAppCountArray.count<3) {
+                [actView startAnimating];
+                [recorder stop];
+                [self fnStopRecordingAndSave];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"You can not record more then three AudioNotes. Do you want to record more?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+                alert.tag = 123;
+                [alert show];
+            }
         }
     }
+}
+
+- (void)myTask {
+    
 }
 
 // This is the function for Store Recording button which will store the recording and save it in the file.
 - (void) fnStopRecordingAndSave {
     @try {
-        NSString *strURL = [NSString stringWithFormat:@"%@/%@.m4a", DOCUMENTS_FOLDER, dateString];
+        HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.navigationController.view addSubview:HUD];
+        
+        //HUD.delegate = self;
+        HUD.labelText = @"Storing...";
+        //[HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+        [HUD show:YES];
+        
+        NSString *strURL = [NSString stringWithFormat:@"%@/%@/%@.m4a", DOCUMENTS_FOLDER,folderName, dateString];
         NSURL *url = [NSURL URLWithString:strURL];
         
         //Calculating the duration of the current recording.
@@ -693,10 +877,7 @@ const char MyConstantKey;
         //NSLog(@"dateString == %@", dateString);
         
         float duration = audioPlayer1.duration;
-        //NSLog(@"duration == %f", duration);
-        //NSLog(@"fnStopRecordingAndSave Duration here::: %f", audioPlayer1.duration);
-        //NSLog(@"SliderValueChanged Duration here::: %d", (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]);
-        
+       
         if(duration < (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]) {
             recordLbl.text = @"Storing...";
             //Creating its Asset.
@@ -710,7 +891,7 @@ const char MyConstantKey;
             CMTime duration1 = CMTimeMakeWithSeconds(durationInSeconds, 600);
             
             //Storing the saved file with a different name Saved
-            NSString *strURLT = [NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, dateString] ;
+            NSString *strURLT = [NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER,folderName, dateString] ;
             exportSession.outputURL = [NSURL fileURLWithPath:strURLT];
             
             exportSession.outputFileType=AVFileTypeAppleM4A;
@@ -718,10 +899,10 @@ const char MyConstantKey;
             
             //Starting the recording again.
             [self performSelector:@selector(fnStartRecordingAgain) withObject:nil afterDelay:3.0];
-            
             [exportSession exportAsynchronouslyWithCompletionHandler:^{
                 [actView stopAnimating];
-                actView.hidden = TRUE;
+                //actView.hidden = TRUE;
+                //[HUD hide:YES];
                 switch ([exportSession status]) {
                     case AVAssetExportSessionStatusFailed:
                         NSLog(@"Export Failed: %@", [exportSession error] );
@@ -733,12 +914,11 @@ const char MyConstantKey;
                         NSLog(@"Export COMPLETED...");
                         
                         //Making sure that file has been created
-                        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, dateString]];
+                        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER,folderName, dateString]];
                         if(fileExists) {
-                            if(arrFiles.count > 0){
+                            if(arrFiles.count > 0) {
                                 [boolArray removeAllObjects];
-                                
-                                for(int i = 0; i<arrFiles.count;i++){
+                                for(int i = 0; i<arrFiles.count;i++) {
                                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", arrFiles];
                                     BOOL result = [predicate evaluateWithObject:dateString];
                                     
@@ -760,7 +940,7 @@ const char MyConstantKey;
                                         //[timeArray addObject:timeline];
                                         [timeArray insertObject:timeline atIndex:0];
                                         
-                                        NSString *str=[NSString stringWithFormat:@"Snippet"];
+                                        NSString *str=[NSString stringWithFormat:@"AudioNotes"];
                                         //[fileNameArray addObject:str];
                                         [fileNameArray insertObject:str atIndex:0];
                                     }
@@ -783,26 +963,28 @@ const char MyConstantKey;
                                 //[timeArray addObject:timeline];
                                 [timeArray insertObject:timeline atIndex:0];
                                 
-                                NSString *str=[NSString stringWithFormat:@"Snippet"];
-                                //[fileNameArray addObject:str];
+                                NSString *str=[NSString stringWithFormat:@"AudioNotes"];
                                 [fileNameArray insertObject:str atIndex:0];
                             }
                         }
                         
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"StoredFiles"];
-                        [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:@"StoredFiles"];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:storedFiles_Key];
+                        [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:storedFiles_Key];
                         
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DateArray"];
-                        [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:@"DateArray"];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:dateArray_Key];
+                        [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:dateArray_Key];
                         
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TimeArray"];
-                        [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:@"TimeArray"];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:timeArray_Key];
+                        [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:timeArray_Key];
                         
-                        [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:@"FileNameArray"];
+                        [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:fileNameArray_Key];
                         
                         [[NSUserDefaults standardUserDefaults] synchronize];
                         
                         [recordTableView reloadData];
+                        [self getAllAudioFileCount];
+                        [self getAudioFromFolder];
+                        [self performSelector:@selector(hideMBProgressHUD) withObject:nil afterDelay:10.0];
                         
                         recordLbl.text = @"Monitoring";
                         
@@ -830,7 +1012,7 @@ const char MyConstantKey;
             CMTime duration1 = CMTimeMakeWithSeconds(durationInSeconds, 600);
             
             //Storing the saved file with a different name Saved
-            NSString *strURLT = [NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, dateString] ;
+            NSString *strURLT = [NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER,folderName, dateString] ;
             exportSession.outputURL = [NSURL fileURLWithPath:strURLT];
             
             exportSession.outputFileType=AVFileTypeAppleM4A;
@@ -841,7 +1023,12 @@ const char MyConstantKey;
             
             [exportSession exportAsynchronouslyWithCompletionHandler:^{
                 [actView stopAnimating];
-                actView.hidden = TRUE;
+                //actView.hidden = TRUE;
+                //dispatch_async(dispatch_get_main_queue(), ^{
+                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
+                    //[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    //[HUD hide:YES];
+                //});
                 
                 switch ([exportSession status]) {
                     case AVAssetExportSessionStatusFailed:
@@ -855,7 +1042,7 @@ const char MyConstantKey;
                         NSLog(@"Export COMPLETED...");
                         
                         //Making sure that file has been created
-                        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/Saved_%@.m4a", DOCUMENTS_FOLDER, dateString]];
+                        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@/Saved_%@.m4a", DOCUMENTS_FOLDER,folderName, dateString]];
                         if(fileExists) {
                             if(arrFiles.count > 0) {
                                 [boolArray removeAllObjects];
@@ -879,7 +1066,7 @@ const char MyConstantKey;
                                         //[timeArray addObject:@"10"];//Add slider time here
                                         //[timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
                                         [timeArray insertObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]] atIndex:0];
-                                        NSString *str=[NSString stringWithFormat:@"Snippet"];
+                                        NSString *str=[NSString stringWithFormat:@"AudioNotes"];
                                         //[fileNameArray addObject:str];
                                         [fileNameArray insertObject:str atIndex:0];
                                     }
@@ -900,27 +1087,31 @@ const char MyConstantKey;
                                 //[timeArray addObject:@"10"];
                                 //[timeArray addObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]]];
                                 [timeArray insertObject:[NSString stringWithFormat:@"%d",(int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SliderValueChanged"]] atIndex:0];
-                                NSString *str=[NSString stringWithFormat:@"Snippet"];
+                                NSString *str=[NSString stringWithFormat:@"AudioNotes"];
                                 //[fileNameArray addObject:str];
                                 [fileNameArray insertObject:str atIndex:0];
                             }
                         }
                         
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"StoredFiles"];
-                        [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:@"StoredFiles"];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:storedFiles_Key];
+                        [[NSUserDefaults standardUserDefaults] setObject:arrFiles forKey:storedFiles_Key];
                         
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DateArray"];
-                        [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:@"DateArray"];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:dateArray_Key];
+                        [[NSUserDefaults standardUserDefaults] setObject:dateArray forKey:dateArray_Key];
                         
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TimeArray"];
-                        [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:@"TimeArray"];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:timeArray_Key];
+                        [[NSUserDefaults standardUserDefaults] setObject:timeArray forKey:timeArray_Key];
                         
-                        [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:@"FileNameArray"];
+                        [[NSUserDefaults standardUserDefaults] setObject:fileNameArray forKey:fileNameArray_Key];
                         
                         [[NSUserDefaults standardUserDefaults] synchronize];
                         
                         [recordTableView reloadData];
+                        [self getAllAudioFileCount];
+                        [self getAudioFromFolder];
                         recordLbl.text = @"Monitoring";
+                        [self performSelector:@selector(hideMBProgressHUD) withObject:nil afterDelay:10.0];
+                        
                         //                        if([recordLbl.text isEqualToString:@"Saved"]){
                         //                            [self showAlert];
                         //                        }
@@ -993,7 +1184,7 @@ const char MyConstantKey;
                                     [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
                                     nil];
     
-    recorderFilePath = [NSString stringWithFormat:@"%@/%@.m4a", DOCUMENTS_FOLDER, dateString] ;
+    recorderFilePath = [NSString stringWithFormat:@"%@/%@/%@.m4a", DOCUMENTS_FOLDER,folderName, dateString] ;
     
     NSURL *url = [NSURL fileURLWithPath:recorderFilePath];
     err = nil;
@@ -1046,4 +1237,10 @@ const char MyConstantKey;
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)hideMBProgressHUD {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [HUD hide:YES];
+    });
+}
 @end

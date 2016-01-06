@@ -36,7 +36,14 @@
     AVAudioRecorder *recorder;
     AVAudioPlayer  *audioPlayer;
 }
+
+@property (nonatomic ,retain) NSString *folderName;
+@property (nonatomic, strong) NSMutableArray *inAppCountArray;
+@property (nonatomic, strong) NSMutableArray *audioCountArray;
+
 - (IBAction)infoButtonAction:(id)sender;
--(void)uploadFileDropBox;
+- (IBAction)deleteAction:(id)sender;
+- (void)uploadFileDropBox;
+
 @end
 
